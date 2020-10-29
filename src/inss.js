@@ -1,11 +1,11 @@
 module.exports = {
-  INSS: function INSS (salary) {
-    if (salary > inssMaxRangeValue) {
+  INSS: function INSS (payment) {
+    if (payment > inssMaxRangeValue) {
       return inssMaxValueToPay
     }
 
     const initialValuesForReduce = {
-      salary,
+      payment,
       accumulatedValue: 0,
       rangeBottomValue: 0,
       calculusMemory: []
@@ -14,12 +14,12 @@ module.exports = {
     return roundCurrency(accumulatedValue)
   },
 
-  detailedINSS: function detailedINSS (salary) {
-    if (salary > inssMaxRangeValue) {
+  detailedINSS: function detailedINSS (payment) {
+    if (payment > inssMaxRangeValue) {
       return `para salários acima de ${inssMaxRangeValue}, paga-se o teto de ${inssMaxValueToPay}`
     }
     const initialValuesForReduce = {
-      salary,
+      payment,
       accumulatedValue: 0,
       rangeBottomValue: 0,
       calculusMemory: []
@@ -38,9 +38,9 @@ const inssRanges = [
 ]
 
 function addInssFromRange (accumulated, currentRange) {
-  const { salary, accumulatedValue, rangeBottomValue, calculusMemory } = accumulated
+  const { payment, accumulatedValue, rangeBottomValue, calculusMemory } = accumulated
 
-  const rangeUpperValue = Math.min(salary, currentRange.maxValue)
+  const rangeUpperValue = Math.min(payment, currentRange.maxValue)
   const rangeValue = rangeUpperValue - rangeBottomValue
   if (rangeValue <= 0) {
     return accumulated
@@ -51,7 +51,7 @@ function addInssFromRange (accumulated, currentRange) {
   )
 
   return {
-    salary,
+    payment,
     accumulatedValue: accumulatedValue + rangeValueToPay,
     rangeBottomValue: rangeUpperValue,
     calculusMemory
