@@ -5,11 +5,6 @@ describe('INSS', function () {
 
   const testValues = [
     {
-      payment: 500,
-      expectedInss: 37.5,
-      expectedCalculusMemory: '(500.00 x 7.5%) = 37.5'
-    },
-    {
       payment: 1000,
       expectedInss: 75,
       expectedCalculusMemory: '(1000.00 x 7.5%) = 75'
@@ -28,11 +23,6 @@ describe('INSS', function () {
       payment: 4000,
       expectedInss: 418.94,
       expectedCalculusMemory: '(1045.00 x 7.5%) + (1044.60 x 9.0%) + (1044.80 x 12.0%) + (865.60 x 14.0%) = 418.94'
-    },
-    {
-      payment: 5000,
-      expectedInss: 558.94,
-      expectedCalculusMemory: '(1045.00 x 7.5%) + (1044.60 x 9.0%) + (1044.80 x 12.0%) + (1865.60 x 14.0%) = 558.94'
     },
     {
       payment: 6000,
