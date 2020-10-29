@@ -2,4 +2,6 @@
 node_modules
 jspm_packages
 package-lock.json
+
+/.nyc_output
 .DS_Store
