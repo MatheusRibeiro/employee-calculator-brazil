@@ -4,13 +4,14 @@ describe('Payment Functions', function () {
   const {
     salaryRemainer,
     advanceNoticeSalary,
-    advanceNoticeThirteenthSalary,
+    proportionalThirteenthSalary,
+    indemnifiedThirteenthSalary,
     paidTimeOffIndemnified,
     advanceNoticePaidTimeOff
   } = require('./payments')
 
   describe('Salary Remainer', function () {
-    const salaryRemainerTests = [
+    const fixtures = [
       {
         grossSalary: 5000,
         endDate: '2020-10-12',
@@ -27,7 +28,7 @@ describe('Payment Functions', function () {
       }
     ]
 
-    salaryRemainerTests.forEach(function ({ grossSalary, endDate, expectedResult }) {
+    fixtures.forEach(function ({ grossSalary, endDate, expectedResult }) {
       it(`calculates salary remainer for ${grossSalary} gross salary and termination date ${endDate}`, function () {
         const result = salaryRemainer({ grossSalary, endDate })
         expect(result).to.eql(expectedResult)
@@ -36,7 +37,7 @@ describe('Payment Functions', function () {
   })
 
   describe('Advance Notice Salary', function () {
-    const advanceNoticeSalaryTests = [
+    const fixtures = [
       {
         grossSalary: 5000,
         startDate: '2014-11-06',
@@ -55,7 +56,7 @@ describe('Payment Functions', function () {
       }
     ]
 
-    advanceNoticeSalaryTests.forEach(function ({ grossSalary, startDate, endDate, expectedResult }) {
+    fixtures.forEach(function ({ grossSalary, startDate, endDate, expectedResult }) {
       it(`calculates advance notice salary for ${grossSalary} gross salary, working between ${startDate} and ${endDate}`, function () {
         const result = advanceNoticeSalary({ grossSalary, startDate, endDate })
         expect(result).to.eql(expectedResult)
@@ -63,38 +64,67 @@ describe('Payment Functions', function () {
     })
   })
 
-  describe('Advance Notice Thirteenth Proportional Salary', function () {
-    const advanceNoticeThirteenthSalaryTests = [
+  describe('Proportional Thirteenth Salary', function () {
+    const fixtures = [
       {
-        grossSalary: 5000,
+        grossSalary: 6000,
         startDate: '2014-11-06',
         endDate: '2020-10-12',
         firstInstallment: 2500,
         expectedResult: {
-          grossValue: 4583.33,
+          grossValue: 4500,
           firstInstallment: 2500,
-          inss: 500.61,
-          irrf: 282.48,
-          netValue: 1300.23,
+          inss: 488.94,
+          irrf: 266.36,
+          netValue: 1244.69,
           details: {
             startDate: '2014-11-06',
-            completedMonths: 11,
-            endDateWithAdvanceNotice: '2020-11-26'
+            endDate: '2020-10-12',
+            completedMonths: 9
           }
         }
       }
     ]
 
-    advanceNoticeThirteenthSalaryTests.forEach(function ({ grossSalary, startDate, endDate, firstInstallment, expectedResult }) {
-      it(`calculates the proportional advance notice thirteenth salary for ${grossSalary} gross salary, giving a firstInstallment of ${firstInstallment} and working between ${startDate} and ${endDate}`, function () {
-        const result = advanceNoticeThirteenthSalary({ grossSalary, startDate, endDate, firstInstallment })
+    fixtures.forEach(function ({ grossSalary, startDate, endDate, firstInstallment, expectedResult }) {
+      it(`calculates the proportional thirteenth salary for ${grossSalary} gross salary, giving a firstInstallment of ${firstInstallment} and working between ${startDate} and ${endDate}`, function () {
+        const result = proportionalThirteenthSalary({ grossSalary, startDate, endDate, firstInstallment })
+        expect(result).to.eql(expectedResult)
+      })
+    })
+  })
+
+  describe('Indemnified Thirteenth Salary', function () {
+    const fixtures = [
+      {
+        grossSalary: 6000,
+        startDate: '2014-11-06',
+        endDate: '2020-10-12',
+        expectedResult: {
+          grossValue: 1000,
+          inss: 0,
+          irrf: 0,
+          netValue: 1000,
+          details: {
+            startDate: '2014-11-06',
+            endDate: '2020-10-12',
+            endDateWithAdvanceNotice: '2020-11-26',
+            completedMonths: 2
+          }
+        }
+      }
+    ]
+
+    fixtures.forEach(function ({ grossSalary, startDate, endDate, expectedResult }) {
+      it(`calculates the indemnified thirteenth salary for ${grossSalary} gross salary, working between ${startDate} and ${endDate}`, function () {
+        const result = indemnifiedThirteenthSalary({ grossSalary, startDate, endDate })
         expect(result).to.eql(expectedResult)
       })
     })
   })
 
   describe('Indemnified Paid Time Off', function () {
-    const paidTimeOffTests = [
+    const fixtures = [
       {
         grossSalary: 6000,
         hasTimeOff: true,
@@ -107,7 +137,7 @@ describe('Payment Functions', function () {
       }
     ]
 
-    paidTimeOffTests.forEach(function ({ grossSalary, hasTimeOff, expectedResult }) {
+    fixtures.forEach(function ({ grossSalary, hasTimeOff, expectedResult }) {
       it(`calculates the indemnified paid time off for ${grossSalary} gross salary`, function () {
         const result = paidTimeOffIndemnified({ grossSalary, hasTimeOff })
         expect(result).to.eql(expectedResult)
@@ -130,7 +160,7 @@ describe('Payment Functions', function () {
   })
 
   describe('Advance Notice Paid Time Off', function () {
-    const advanceNoticeTimeOffTests = [
+    const fixtures = [
       {
         grossSalary: 5000,
         startDate: '2014-01-06',
@@ -149,7 +179,7 @@ describe('Payment Functions', function () {
       }
     ]
 
-    advanceNoticeTimeOffTests.forEach(function ({ grossSalary, startDate, endDate, expectedResult }) {
+    fixtures.forEach(function ({ grossSalary, startDate, endDate, expectedResult }) {
       it(`calculates advance notice paid time off for ${grossSalary} gross salary, working between ${startDate} and ${endDate}`, function () {
         const result = advanceNoticePaidTimeOff({ grossSalary, startDate, endDate })
         expect(result).to.eql(expectedResult)

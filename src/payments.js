@@ -54,10 +54,9 @@ function advanceNoticeSalary ({ grossSalary, startDate, endDate }) {
   }
 }
 
-function advanceNoticeThirteenthSalary ({ grossSalary, startDate, endDate, firstInstallment }) {
+function proportionalThirteenthSalary ({ grossSalary, startDate, endDate, firstInstallment }) {
   const days = advanceNoticeDays({ startDate, endDate })
-  const endDateWithAdvanceNotice = addDays(endDate, days)
-  const completedMonths = completedMonthsFromYear(endDateWithAdvanceNotice)
+  const completedMonths = completedMonthsFromYear(endDate)
 
   const grossValue = roundCurrency(grossSalary * completedMonths / 12)
   const inss = INSS(grossValue)
@@ -72,6 +71,30 @@ function advanceNoticeThirteenthSalary ({ grossSalary, startDate, endDate, first
     netValue,
     details: {
       startDate,
+      endDate,
+      completedMonths
+    }
+  }
+}
+
+function indemnifiedThirteenthSalary ({ grossSalary, startDate, endDate }) {
+  const days = advanceNoticeDays({ startDate, endDate })
+  const endDateWithAdvanceNotice = addDays(endDate, days)
+  const completedMonths = completedMonthsFromYear(endDateWithAdvanceNotice) - completedMonthsFromYear(endDate)
+
+  const grossValue = roundCurrency(grossSalary * completedMonths / 12)
+  const inss = 0
+  const irrf = 0
+  const netValue = roundCurrency(grossValue - inss - irrf)
+
+  return {
+    grossValue,
+    inss,
+    irrf,
+    netValue,
+    details: {
+      startDate,
+      endDate,
       endDateWithAdvanceNotice,
       completedMonths
     }
@@ -130,7 +153,8 @@ function grossPaidTimeOffSalary ({ grossSalary }) {
 module.exports = {
   salaryRemainer,
   advanceNoticeSalary,
-  advanceNoticeThirteenthSalary,
+  proportionalThirteenthSalary,
+  indemnifiedThirteenthSalary,
   paidTimeOffIndemnified,
   advanceNoticePaidTimeOff
 }
