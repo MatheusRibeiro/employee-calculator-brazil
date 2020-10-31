@@ -1,3 +1,5 @@
+const { roundCurrency } = require('./currencyHelper')
+
 const deductionPerDependent = 189.59
 
 const irrfRanges = [
@@ -75,8 +77,4 @@ function addIrrfFromRange (accumulated, currentRange) {
     rangeBottomValue: rangeUpperValue,
     calculusMemory
   }
-}
-
-function roundCurrency (currency) {
-  return Math.floor((currency + Number.EPSILON) * 100) / 100
 }

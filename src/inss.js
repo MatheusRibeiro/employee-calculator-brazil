@@ -1,3 +1,5 @@
+const { roundCurrency } = require('./currencyHelper')
+
 const inssMaxRangeValue = 6101.06
 const inssMaxValueToPay = 713.09
 const inssRanges = [
@@ -58,8 +60,4 @@ function addInssFromRange (accumulated, currentRange) {
     rangeBottomValue: rangeUpperValue,
     calculusMemory
   }
-}
-
-function roundCurrency (currency) {
-  return Math.floor((currency + Number.EPSILON) * 100) / 100
 }
