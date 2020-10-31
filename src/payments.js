@@ -55,7 +55,6 @@ function advanceNoticeSalary ({ grossSalary, startDate, endDate }) {
 }
 
 function proportionalThirteenthSalary ({ grossSalary, startDate, endDate, firstInstallment }) {
-  const days = advanceNoticeDays({ startDate, endDate })
   const completedMonths = completedMonthsFromYear(endDate)
 
   const grossValue = roundCurrency(grossSalary * completedMonths / 12)
