@@ -8,7 +8,7 @@ describe('Payment Functions', function () {
     indemnifiedThirteenthSalary,
     paidTimeOffIndemnified,
     advanceNoticePaidTimeOff
-  } = require('./payments')
+  } = require('./partialPayments')
 
   describe('Salary Remainer', function () {
     const fixtures = [
