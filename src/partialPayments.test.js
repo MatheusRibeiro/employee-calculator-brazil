@@ -131,27 +131,27 @@ describe('Partial Payments', function () {
   describe('Indemnified Paid Time Off', function () {
     const fixtures = [
       {
-        grossSalary: 6000,
-        hasPaidTimeOff: true,
+        grossSalary: 9000,
+        remainingDaysPaidTimeOff: 10,
         expectedResult: {
-          grossValue: 8000,
+          grossValue: 4000,
           inss: 0,
           irrf: 0,
-          netValue: 8000
+          netValue: 4000
         }
       }
     ]
 
-    fixtures.forEach(function ({ grossSalary, hasPaidTimeOff, expectedResult }) {
+    fixtures.forEach(function ({ grossSalary, remainingDaysPaidTimeOff, expectedResult }) {
       it(`calculates the indemnified paid time off for ${grossSalary} gross salary`, function () {
-        const result = paidTimeOffIndemnified({ grossSalary, hasPaidTimeOff })
+        const result = paidTimeOffIndemnified({ grossSalary, remainingDaysPaidTimeOff })
         expect(result).to.eql(expectedResult)
       })
     })
 
     it('return empty values when there is no time off', function () {
-      const grossSalary = 'any'
-      const hasPaidTimeOff = false
+      const grossSalary = 10000
+      const remainingDaysPaidTimeOff = 0
 
       const expectedResult = {
         grossValue: 0,
@@ -159,7 +159,7 @@ describe('Partial Payments', function () {
         irrf: 0,
         netValue: 0
       }
-      const result = paidTimeOffIndemnified({ grossSalary, hasPaidTimeOff })
+      const result = paidTimeOffIndemnified({ grossSalary, remainingDaysPaidTimeOff })
       expect(result).to.eql(expectedResult)
     })
   })

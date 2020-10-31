@@ -11,7 +11,7 @@ describe('Full Termination Calculus', function () {
         endDate: '2020-11-04',
         currentFgtsBalance: 39800,
         cashedFgts: 200,
-        hasPaidTimeOff: true,
+        remainingDaysPaidTimeOff: 30,
         thirteenthSalaryFirstInstallment: 0
       },
       expectedOutput: {
