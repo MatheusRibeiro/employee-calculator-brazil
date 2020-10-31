@@ -22,7 +22,9 @@ describe('Payment Functions', function () {
           irrf: 0,
           netValue: 1835.68,
           details: {
-            days: 12
+            days: 12,
+            inss: '(1045.00 x 7.5%) + (955.00 x 9.0%) = 164.32',
+            irff: '(1835.68 x 0.0%) = 0'
           }
         }
       }
@@ -50,7 +52,8 @@ describe('Payment Functions', function () {
           netValue: 6786.91,
           details: {
             advanceNoticeDays: 45,
-            endDateWithAdvanceNotice: '2020-11-26'
+            endDateWithAdvanceNotice: '2020-11-26',
+            inss: 'para salários acima de 6101.06, paga-se o teto de 713.09'
           }
         }
       }
@@ -80,7 +83,9 @@ describe('Payment Functions', function () {
           details: {
             startDate: '2014-11-06',
             endDate: '2020-10-12',
-            completedMonths: 9
+            completedMonths: 9,
+            inss: '(1045.00 x 7.5%) + (1044.60 x 9.0%) + (1044.80 x 12.0%) + (1365.60 x 14.0%) = 488.94',
+            irff: '(1903.98 x 0.0%) + (922.67 x 7.5%) + (924.40 x 15.0%) + (260.01 x 22.5%) = 266.36'
           }
         }
       }

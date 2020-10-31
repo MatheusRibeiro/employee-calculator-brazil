@@ -1,5 +1,5 @@
-const { INSS } = require('./inss')
-const { IRRF } = require('./irrf')
+const { INSS, detailedINSS } = require('./inss')
+const { IRRF, detailedIRRF } = require('./irrf')
 const { roundCurrency } = require('./currencyHelper')
 
 const {
@@ -26,7 +26,9 @@ function salaryRemainer ({ grossSalary, endDate }) {
     irrf,
     netValue,
     details: {
-      days: daysForSalaryRemainer
+      days: daysForSalaryRemainer,
+      inss: detailedINSS(grossValue),
+      irff: detailedIRRF(grossValue - inss)
     }
   }
 }
@@ -49,7 +51,8 @@ function advanceNoticeSalary ({ grossSalary, startDate, endDate }) {
     netValue,
     details: {
       advanceNoticeDays: days,
-      endDateWithAdvanceNotice
+      endDateWithAdvanceNotice,
+      inss: detailedINSS(grossValue)
     }
   }
 }
@@ -71,7 +74,9 @@ function proportionalThirteenthSalary ({ grossSalary, startDate, endDate, firstI
     details: {
       startDate,
       endDate,
-      completedMonths
+      completedMonths,
+      inss: detailedINSS(grossValue),
+      irff: detailedIRRF(grossValue - inss)
     }
   }
 }
