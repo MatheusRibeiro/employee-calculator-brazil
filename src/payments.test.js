@@ -3,7 +3,8 @@ describe('Payment Functions', function () {
 
   const {
     salaryRemainer,
-    advanceNoticeSalary
+    advanceNoticeSalary,
+    advanceNoticeThirteenthSalary
   } = require('./payments')
 
   const salaryRemainerTests = [
@@ -52,6 +53,34 @@ describe('Payment Functions', function () {
   advanceNoticeSalaryTests.forEach(function ({ grossSalary, startDate, endDate, expectedResult }) {
     it(`calculates advance notice salary for ${grossSalary} gross salary, working between ${startDate} and ${endDate}`, function () {
       const result = advanceNoticeSalary({ grossSalary, startDate, endDate })
+      expect(result).to.eql(expectedResult)
+    })
+  })
+
+  const advanceNoticeThirteenthSalaryTests = [
+    {
+      grossSalary: 5000,
+      startDate: '2014-11-06',
+      endDate: '2020-10-12',
+      firstInstallment: 2500,
+      expectedResult: {
+        grossValue: 4583.33,
+        firstInstallment: 2500,
+        inss: 500.61,
+        irrf: 282.48,
+        netValue: 1300.23,
+        details: {
+          startDate: '2014-11-06',
+          completedMonths: 11,
+          endDateWithAdvanceNotice: '2020-11-26'
+        }
+      }
+    }
+  ]
+
+  advanceNoticeThirteenthSalaryTests.forEach(function ({ grossSalary, startDate, endDate, firstInstallment, expectedResult }) {
+    it(`calculates the proportional advance notice thirteenth salary for ${grossSalary} gross salary, giving a firstInstallment of ${firstInstallment} and working between ${startDate} and ${endDate}`, function () {
+      const result = advanceNoticeThirteenthSalary({ grossSalary, startDate, endDate, firstInstallment })
       expect(result).to.eql(expectedResult)
     })
   })
