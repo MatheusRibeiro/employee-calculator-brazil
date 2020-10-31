@@ -150,7 +150,7 @@ describe('Full Termination Calculus', function () {
       expect(output.fgts.details).to.eql(expectedOutput.fgts.details)
     })
 
-    it('returns the amount to be received, detailing salary and fgts', function () {
+    it('returns the amount to be received, detailing what is from salary and fgts', function () {
       expect(output.total.salary).to.equal(expectedOutput.total.salary)
       expect(output.total.fgts).to.equal(expectedOutput.total.fgts)
       expect(output.total.netValue).to.equal(expectedOutput.total.netValue)
