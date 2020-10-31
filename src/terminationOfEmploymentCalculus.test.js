@@ -1,4 +1,4 @@
-describe('INSS', function () {
+describe('Full Termination Calculus', function () {
   const { expect } = require('chai')
 
   const terminationOfEmploymentCalculus = require('./terminationOfEmploymentCalculus')
@@ -11,7 +11,7 @@ describe('INSS', function () {
         endDate: '2020-11-04',
         currentFgtsBalance: 40000,
         expendedFgts: 0,
-        hasTimeOff: true,
+        hasPaidTimeOff: true,
         thirteenthSalaryFirstInstallment: 0
       },
       expectedOutput: {

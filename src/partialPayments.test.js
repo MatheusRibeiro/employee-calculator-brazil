@@ -1,4 +1,4 @@
-describe('Payment Functions', function () {
+describe('Partial Payments', function () {
   const { expect } = require('chai')
 
   const {
@@ -132,7 +132,7 @@ describe('Payment Functions', function () {
     const fixtures = [
       {
         grossSalary: 6000,
-        hasTimeOff: true,
+        hasPaidTimeOff: true,
         expectedResult: {
           grossValue: 8000,
           inss: 0,
@@ -142,16 +142,16 @@ describe('Payment Functions', function () {
       }
     ]
 
-    fixtures.forEach(function ({ grossSalary, hasTimeOff, expectedResult }) {
+    fixtures.forEach(function ({ grossSalary, hasPaidTimeOff, expectedResult }) {
       it(`calculates the indemnified paid time off for ${grossSalary} gross salary`, function () {
-        const result = paidTimeOffIndemnified({ grossSalary, hasTimeOff })
+        const result = paidTimeOffIndemnified({ grossSalary, hasPaidTimeOff })
         expect(result).to.eql(expectedResult)
       })
     })
 
     it('return empty values when there is no time off', function () {
       const grossSalary = 'any'
-      const hasTimeOff = false
+      const hasPaidTimeOff = false
 
       const expectedResult = {
         grossValue: 0,
@@ -159,7 +159,7 @@ describe('Payment Functions', function () {
         irrf: 0,
         netValue: 0
       }
-      const result = paidTimeOffIndemnified({ grossSalary, hasTimeOff })
+      const result = paidTimeOffIndemnified({ grossSalary, hasPaidTimeOff })
       expect(result).to.eql(expectedResult)
     })
   })

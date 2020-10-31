@@ -19,13 +19,13 @@ function terminationOfEmploymentCalculus ({
   endDate,
   currentFgtsBalance,
   expendedFgts,
-  hasTimeOff,
+  hasPaidTimeOff,
   thirteenthSalaryFirstInstallment
 }) {
   const salaryRemainerResult = salaryRemainer({ grossSalary, endDate })
   const advanceNoticeResult = advanceNoticeSalary({ grossSalary, startDate, endDate })
 
-  const paidTimeOffResult = paidTimeOffIndemnified({ grossSalary, hasTimeOff })
+  const paidTimeOffResult = paidTimeOffIndemnified({ grossSalary, hasPaidTimeOff })
   const advanceNoticePaidTimeOffResult = advanceNoticePaidTimeOff({ grossSalary, startDate, endDate })
 
   const indemnifiedThirteenthSalaryResult = indemnifiedThirteenthSalary({

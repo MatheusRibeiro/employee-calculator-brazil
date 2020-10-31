@@ -105,10 +105,10 @@ function indemnifiedThirteenthSalary ({ grossSalary, startDate, endDate }) {
   }
 }
 
-function paidTimeOffIndemnified ({ grossSalary, hasTimeOff }) {
+function paidTimeOffIndemnified ({ grossSalary, hasPaidTimeOff }) {
   const grossTimeOff = grossPaidTimeOffSalary({ grossSalary })
 
-  const grossValue = hasTimeOff ? roundCurrency(grossTimeOff) : 0
+  const grossValue = hasPaidTimeOff ? roundCurrency(grossTimeOff) : 0
   const inss = 0
   const irrf = 0
   const netValue = grossValue - inss - irrf
