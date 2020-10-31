@@ -6,10 +6,10 @@ describe('Payment Functions', function () {
     advanceNoticeSalary,
     advanceNoticeThirteenthSalary,
     paidTimeOffIndemnified,
+    advanceNoticePaidTimeOff
   } = require('./payments')
 
   describe('Salary Remainer', function () {
-
     const salaryRemainerTests = [
       {
         grossSalary: 5000,
@@ -93,7 +93,7 @@ describe('Payment Functions', function () {
     })
   })
 
-  describe('Paid Time Off', function () {
+  describe('Indemnified Paid Time Off', function () {
     const paidTimeOffTests = [
       {
         grossSalary: 6000,
@@ -126,6 +126,34 @@ describe('Payment Functions', function () {
       }
       const result = paidTimeOffIndemnified({ grossSalary, hasTimeOff })
       expect(result).to.eql(expectedResult)
+    })
+  })
+
+  describe('Advance Notice Paid Time Off', function () {
+    const advanceNoticeTimeOffTests = [
+      {
+        grossSalary: 5000,
+        startDate: '2014-01-06',
+        endDate: '2020-10-12',
+        expectedResult: {
+          grossValue: 5555.55,
+          inss: 0,
+          irrf: 0,
+          netValue: 5555.55,
+          details: {
+            completedMonths: 10,
+            startDate: '2014-01-06',
+            endDateWithAdvanceNotice: '2020-11-29'
+          }
+        }
+      }
+    ]
+
+    advanceNoticeTimeOffTests.forEach(function ({ grossSalary, startDate, endDate, expectedResult }) {
+      it(`calculates advance notice paid time off for ${grossSalary} gross salary, working between ${startDate} and ${endDate}`, function () {
+        const result = advanceNoticePaidTimeOff({ grossSalary, startDate, endDate })
+        expect(result).to.eql(expectedResult)
+      })
     })
   })
 })

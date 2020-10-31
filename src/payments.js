@@ -6,7 +6,8 @@ const {
   addDays,
   completedYears,
   completedDaysFromMonth,
-  completedMonthsFromYear
+  completedMonthsFromYear,
+  completedMonthsFromAniversary
 } = require('./dateHelper')
 
 function salaryRemainer ({ grossSalary, endDate }) {
@@ -93,6 +94,31 @@ function paidTimeOffIndemnified ({ grossSalary, hasTimeOff }) {
   }
 }
 
+function advanceNoticePaidTimeOff ({ grossSalary, startDate, endDate }) {
+  const grossTimeOff = grossPaidTimeOffSalary({ grossSalary })
+
+  const days = advanceNoticeDays({ startDate, endDate })
+  const endDateWithAdvanceNotice = addDays(endDate, days)
+  const completedMonths = completedMonthsFromAniversary(startDate, endDateWithAdvanceNotice)
+
+  const grossValue = roundCurrency(grossTimeOff * completedMonths / 12)
+  const inss = 0
+  const irrf = 0
+  const netValue = grossValue - inss - irrf
+
+  return {
+    grossValue,
+    inss,
+    irrf,
+    netValue,
+    details: {
+      startDate,
+      endDateWithAdvanceNotice,
+      completedMonths
+    }
+  }
+}
+
 function advanceNoticeDays ({ startDate, endDate }) {
   return 30 + 3 * completedYears(startDate, endDate)
 }
@@ -105,5 +131,6 @@ module.exports = {
   salaryRemainer,
   advanceNoticeSalary,
   advanceNoticeThirteenthSalary,
-  paidTimeOffIndemnified
+  paidTimeOffIndemnified,
+  advanceNoticePaidTimeOff
 }
