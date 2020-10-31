@@ -77,12 +77,33 @@ function advanceNoticeThirteenthSalary ({ grossSalary, startDate, endDate, first
   }
 }
 
+function paidTimeOffIndemnified ({ grossSalary, hasTimeOff }) {
+  const grossTimeOff = grossPaidTimeOffSalary({ grossSalary })
+
+  const grossValue = hasTimeOff ? roundCurrency(grossTimeOff) : 0
+  const inss = 0
+  const irrf = 0
+  const netValue = grossValue - inss - irrf
+
+  return {
+    grossValue,
+    inss,
+    irrf,
+    netValue
+  }
+}
+
 function advanceNoticeDays ({ startDate, endDate }) {
   return 30 + 3 * completedYears(startDate, endDate)
+}
+
+function grossPaidTimeOffSalary ({ grossSalary }) {
+  return grossSalary + grossSalary / 3
 }
 
 module.exports = {
   salaryRemainer,
   advanceNoticeSalary,
-  advanceNoticeThirteenthSalary
+  advanceNoticeThirteenthSalary,
+  paidTimeOffIndemnified
 }
