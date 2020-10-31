@@ -5,7 +5,8 @@ describe('Date Helper', function () {
     completedYears,
     completedMonthsFromYear,
     completedDaysFromMonth,
-    completedMonthsFromAniversary
+    completedMonthsFromAniversary,
+    addDays
   } = require('./dateHelper')
 
   const dateDiffsInputs = [
@@ -78,6 +79,36 @@ describe('Date Helper', function () {
     it(`calculates the number of days from month start for ${referenceDate}`, function () {
       const days = completedDaysFromMonth(referenceDate)
       expect(days).to.equals(expectedDaysOnMonth)
+    })
+  })
+
+  const addDaysInput = [
+    {
+      referenceDate: '2020-01-07',
+      daysToAdd: 1,
+      expectedDate: '2020-01-08'
+    },
+    {
+      referenceDate: '2020-11-04',
+      daysToAdd: 51,
+      expectedDate: '2020-12-25'
+    },
+    {
+      referenceDate: '2010-02-27',
+      daysToAdd: 20,
+      expectedDate: '2010-03-19'
+    },
+    {
+      referenceDate: '2020-01-30',
+      daysToAdd: 7,
+      expectedDate: '2020-02-06'
+    }
+  ]
+
+  addDaysInput.forEach(function ({ referenceDate, daysToAdd, expectedDate }) {
+    it(`adds ${daysToAdd} days to ${referenceDate}`, function () {
+      const date = addDays(referenceDate, daysToAdd)
+      expect(date).to.equals(expectedDate)
     })
   })
 })

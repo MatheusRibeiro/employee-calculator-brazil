@@ -26,5 +26,11 @@ module.exports = {
   completedDaysFromMonth: function completedDaysFromMonth (referenceDate) {
     const date = moment(referenceDate)
     return date.date()
+  },
+
+  addDays: function addDays (referenceDate, daysToAdd) {
+    return moment(referenceDate)
+      .add(daysToAdd, 'days')
+      .format('YYYY-MM-DD')
   }
 }
