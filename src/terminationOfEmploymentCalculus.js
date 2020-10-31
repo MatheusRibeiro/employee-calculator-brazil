@@ -18,7 +18,7 @@ function terminationOfEmploymentCalculus ({
   startDate,
   endDate,
   currentFgtsBalance,
-  expendedFgts,
+  cashedFgts,
   hasPaidTimeOff,
   thirteenthSalaryFirstInstallment
 }) {
@@ -40,7 +40,7 @@ function terminationOfEmploymentCalculus ({
     firstInstallment: thirteenthSalaryFirstInstallment
   })
 
-  const baseFgts = currentFgtsBalance + expendedFgts
+  const baseFgts = currentFgtsBalance + cashedFgts
   const fgtsPenalty = baseFgts * 0.4
   const finalFgtsBalance = roundCurrency(
     currentFgtsBalance +
@@ -76,12 +76,14 @@ function terminationOfEmploymentCalculus ({
       total: roundCurrency(paidTimeOffResult.netValue + advanceNoticePaidTimeOffResult.netValue)
     },
     fgts: {
-      base: baseFgts,
-      fourtyPercentPenalty: fgtsPenalty,
-      alreadyExpended: expendedFgts,
-      overSalaryRemainer: salaryRemainerResult.fgts,
-      overAdvanceNoticeSalary: advanceNoticeResult.fgts,
-      total: finalFgtsBalance
+      total: finalFgtsBalance,
+      details: {
+        base: baseFgts,
+        fourtyPercentPenalty: fgtsPenalty,
+        cashedFgts: cashedFgts,
+        overSalaryRemainer: salaryRemainerResult.fgts,
+        overAdvanceNoticeSalary: advanceNoticeResult.fgts
+      }
     },
     total: {
       salary: totalSalary,

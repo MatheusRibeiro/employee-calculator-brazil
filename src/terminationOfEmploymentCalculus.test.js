@@ -9,8 +9,8 @@ describe('Full Termination Calculus', function () {
         grossSalary: 6000,
         startDate: '2013-09-23',
         endDate: '2020-11-04',
-        currentFgtsBalance: 40000,
-        expendedFgts: 0,
+        currentFgtsBalance: 39800,
+        cashedFgts: 200,
         hasPaidTimeOff: true,
         thirteenthSalaryFirstInstallment: 0
       },
@@ -92,26 +92,68 @@ describe('Full Termination Calculus', function () {
           total: 10000
         },
         fgts: {
-          base: 40000,
-          fourtyPercentPenalty: 16000,
-          alreadyExpended: 0,
-          overSalaryRemainer: 64,
-          overAdvanceNoticeSalary: 816,
-          total: 56880
+          total: 56680,
+          details: {
+            base: 40000,
+            fourtyPercentPenalty: 16000,
+            cashedFgts: 200,
+            overSalaryRemainer: 64,
+            overAdvanceNoticeSalary: 816
+          }
         },
         total: {
           salary: 25304.85,
-          fgts: 56880,
-          netValue: 82184.85
+          fgts: 56680,
+          netValue: 81984.85
         }
       }
     }
   ]
 
   fixtures.forEach(function ({ input, expectedOutput }) {
-    it(`calculates full termination for ${input.grossSalary} payment`, function () {
-      const output = terminationOfEmploymentCalculus(input)
-      expect(output).to.eql(expectedOutput)
+    const output = terminationOfEmploymentCalculus(input)
+
+    it('returns salary remainer', function () {
+      expect(output.salary.remainer).to.eql(expectedOutput.salary.remainer)
+    })
+    it('returns advance notice salary', function () {
+      expect(output.salary.advanceNotice).to.eql(expectedOutput.salary.advanceNotice)
+    })
+    it('returns the total salary', function () {
+      expect(output.salary.total).to.equal(expectedOutput.salary.total)
+    })
+
+    it('returns proportional thirteenth salary', function () {
+      expect(output.thirteenthSalary.proportional).to.eql(expectedOutput.thirteenthSalary.proportional)
+    })
+    it('returns indemnified thirteenth salary', function () {
+      expect(output.thirteenthSalary.indemnified).to.eql(expectedOutput.thirteenthSalary.indemnified)
+    })
+    it('returns the total thirteenth salary', function () {
+      expect(output.thirteenthSalary.total).to.equal(expectedOutput.thirteenthSalary.total)
+    })
+
+    it('returns paid time off not taken', function () {
+      expect(output.paidTimeOff.full).to.eql(expectedOutput.paidTimeOff.full)
+    })
+    it('returns advance notice paid time off', function () {
+      expect(output.paidTimeOff.advanceNotice).to.eql(expectedOutput.paidTimeOff.advanceNotice)
+    })
+    it('returns the total paid time off', function () {
+      expect(output.paidTimeOff.total).to.equal(expectedOutput.paidTimeOff.total)
+    })
+
+    it('returns the FGTS total', function () {
+      expect(output.fgts.total).to.equal(expectedOutput.fgts.total)
+    })
+    it('returns the details of FGTS calculus', function () {
+      expect(output.fgts.details).to.eql(expectedOutput.fgts.details)
+    })
+
+    it('returns the amount to be received, detailing salary and fgts', function () {
+      expect(output.total.salary).to.equal(expectedOutput.total.salary)
+      expect(output.total.fgts).to.equal(expectedOutput.total.fgts)
+      expect(output.total.netValue).to.equal(expectedOutput.total.netValue)
     })
   })
 })
