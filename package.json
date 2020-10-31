@@ -22,9 +22,9 @@
   },
   "nyc": {
     "statements": 95,
-    "branches": 87,
+    "branches": 95,
     "functions": 95,
-    "lines": 90,
+    "lines": 95,
     "check-coverage": true,
     "reporter": [
       "lcov",
