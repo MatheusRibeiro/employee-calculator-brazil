@@ -2,16 +2,20 @@
   "name": "employee-calculator-brazil",
   "version": "1.0.0",
   "author": "Matheus Ribeiro",
-  "private": true,
+  "description": "Functions to calculate salaries and indemnities on employee contract termination",
   "keywords": [
+    "Javascript",
     "Employee",
     "Calculator",
     "Brazil"
   ],
-  "license": "UNLICENSED",
-  "main": "src/index.js",
+  "license": "GPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MathesRibeiro/employee-calculator-brazil"
+  },
+  "main": "index.js",
   "scripts": {
-    "start": "node index.js",
     "test:uniq": "NODE_PATH=./ mocha --colors --reporter spec",
     "test": "yarn test:uniq \"src/**/*.test.js\"",
     "lint": "standard -v \"src/**/*.js\" \"index.js\" | snazzy",
