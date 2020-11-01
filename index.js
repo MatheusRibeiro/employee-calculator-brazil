@@ -1,6 +1,6 @@
-const { INSS, detailedINSS } = require('./inss')
-const { IRRF, detailedIRRF } = require('./irrf')
-const { roundCurrency } = require('./currencyHelper')
+const { INSS, detailedINSS } = require('./src/inss')
+const { IRRF, detailedIRRF } = require('./src/irrf')
+const { roundCurrency } = require('./src/currencyHelper')
 
 const {
   addDays,
@@ -8,7 +8,7 @@ const {
   completedDaysFromMonth,
   completedMonthsFromYear,
   completedMonthsFromAniversary
-} = require('./dateHelper')
+} = require('./src/dateHelper')
 
 const {
   salaryRemainer,
@@ -17,9 +17,9 @@ const {
   advanceNoticePaidTimeOff,
   proportionalThirteenthSalary,
   indemnifiedThirteenthSalary
-} = require('./partialPayments')
+} = require('./src/partialPayments')
 
-const terminationOfEmploymentCalculus = require('./terminationOfEmploymentCalculus')
+const terminationOfEmploymentCalculus = require('./src/terminationOfEmploymentCalculus')
 
 module.exports = {
   terminationOfEmploymentCalculus,
