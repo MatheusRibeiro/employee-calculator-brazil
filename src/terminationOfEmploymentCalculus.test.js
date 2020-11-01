@@ -23,9 +23,10 @@ describe('Full Termination Calculus', function () {
             irrf: 0,
             netValue: 740,
             details: {
-              days: 4,
+              grossValue: 'Salário proporcional para 4 dias',
               inss: '(800.00 x 7.5%) = 60',
-              irff: '(740.00 x 0.0%) = 0'
+              irrf: '(740.00 x 0.0%) = 0',
+              fgts: '8% sobre 800'
             }
           },
           advanceNotice: {
@@ -35,9 +36,10 @@ describe('Full Termination Calculus', function () {
             irrf: 0,
             netValue: 9486.91,
             details: {
-              advanceNoticeDays: 51,
-              endDateWithAdvanceNotice: '2020-12-25',
-              inss: 'para salários acima de 6101.06, paga-se o teto de 713.09'
+              grossValue: 'Salário proporcional para 51 dias',
+              inss: 'Para salários acima de 6101.06, paga-se o teto de 713.09',
+              irrf: 'Não há IRRF para aviso prévio',
+              fgts: '8% sobre 10200'
             }
           },
           total: 10226.91
@@ -50,11 +52,10 @@ describe('Full Termination Calculus', function () {
             irrf: 363.11,
             netValue: 4077.94,
             details: {
-              startDate: '2013-09-23',
-              endDate: '2020-11-04',
-              completedMonths: 10,
+              grossValue: '13º proporcional para 10 meses',
+              firstInstallment: 'Valor líquido do 13º adiantado',
               inss: '(1045.00 x 7.5%) + (1044.60 x 9.0%) + (1044.80 x 12.0%) + (1865.60 x 14.0%) = 558.94',
-              irff: '(1903.98 x 0.0%) + (922.67 x 7.5%) + (924.40 x 15.0%) + (690.01 x 22.5%) = 363.11'
+              irrf: '(1903.98 x 0.0%) + (922.67 x 7.5%) + (924.40 x 15.0%) + (690.01 x 22.5%) = 363.11'
             }
           },
           indemnified: {
@@ -63,10 +64,9 @@ describe('Full Termination Calculus', function () {
             irrf: 0,
             netValue: 1000,
             details: {
-              startDate: '2013-09-23',
-              endDate: '2020-11-04',
-              endDateWithAdvanceNotice: '2020-12-25',
-              completedMonths: 2
+              grossValue: '13º proporcional para 2 meses',
+              inss: 'Não há incidência de INSS para décimo terceiro indenizado',
+              irrf: 'Não há IRRF para décimo terceiro indenizado'
             }
           },
           total: 5077.94
@@ -76,7 +76,12 @@ describe('Full Termination Calculus', function () {
             grossValue: 8000,
             inss: 0,
             irrf: 0,
-            netValue: 8000
+            netValue: 8000,
+            details: {
+              grossValue: 'Férias proporcionais para 30 dias',
+              inss: 'Não há incidência de INSS para férias indenizadas',
+              irrf: 'Não há IRRF para férias indenizadas'
+            }
           },
           advanceNotice: {
             grossValue: 2000,
@@ -84,9 +89,9 @@ describe('Full Termination Calculus', function () {
             irrf: 0,
             netValue: 2000,
             details: {
-              startDate: '2013-09-23',
-              endDateWithAdvanceNotice: '2020-12-25',
-              completedMonths: 3
+              grossValue: 'Férias proporcionais para 51 dias',
+              inss: 'Não há incidência de INSS para férias indenizadas',
+              irrf: 'Não há IRRF para férias indenizadas'
             }
           },
           total: 10000

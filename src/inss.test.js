@@ -37,12 +37,12 @@ describe('INSS', function () {
     {
       payment: 8000,
       expectedInss: 713.09,
-      expectedCalculusMemory: 'para salários acima de 6101.06, paga-se o teto de 713.09'
+      expectedCalculusMemory: 'Para salários acima de 6101.06, paga-se o teto de 713.09'
     },
     {
       payment: 20000,
       expectedInss: 713.09,
-      expectedCalculusMemory: 'para salários acima de 6101.06, paga-se o teto de 713.09'
+      expectedCalculusMemory: 'Para salários acima de 6101.06, paga-se o teto de 713.09'
     }
   ]
 

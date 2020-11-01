@@ -20,9 +20,10 @@ function terminationOfEmploymentCalculus ({
   currentFgtsBalance,
   cashedFgts,
   remainingDaysPaidTimeOff,
-  thirteenthSalaryFirstInstallment
+  thirteenthSalaryFirstInstallment,
+  irrfDeductions = {}
 }) {
-  const salaryRemainerResult = salaryRemainer({ grossSalary, endDate })
+  const salaryRemainerResult = salaryRemainer({ grossSalary, endDate, irrfDeductions })
   const advanceNoticeResult = advanceNoticeSalary({ grossSalary, startDate, endDate })
 
   const paidTimeOffResult = paidTimeOffIndemnified({ grossSalary, remainingDaysPaidTimeOff })
@@ -37,7 +38,8 @@ function terminationOfEmploymentCalculus ({
     grossSalary,
     startDate,
     endDate,
-    firstInstallment: thirteenthSalaryFirstInstallment
+    firstInstallment: thirteenthSalaryFirstInstallment,
+    irrfDeductions
   })
 
   const baseFgts = currentFgtsBalance + cashedFgts

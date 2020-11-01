@@ -22,9 +22,10 @@ describe('Partial Payments', function () {
           irrf: 0,
           netValue: 1835.68,
           details: {
-            days: 12,
+            grossValue: 'Salário proporcional para 12 dias',
+            fgts: '8% sobre 2000',
             inss: '(1045.00 x 7.5%) + (955.00 x 9.0%) = 164.32',
-            irff: '(1835.68 x 0.0%) = 0'
+            irrf: '(1835.68 x 0.0%) = 0'
           }
         }
       }
@@ -51,9 +52,10 @@ describe('Partial Payments', function () {
           irrf: 0,
           netValue: 6786.91,
           details: {
-            advanceNoticeDays: 45,
-            endDateWithAdvanceNotice: '2020-11-26',
-            inss: 'para salários acima de 6101.06, paga-se o teto de 713.09'
+            grossValue: 'Salário proporcional para 45 dias',
+            fgts: '8% sobre 7500',
+            inss: 'Para salários acima de 6101.06, paga-se o teto de 713.09',
+            irrf: 'Não há IRRF para aviso prévio'
           }
         }
       }
@@ -81,11 +83,10 @@ describe('Partial Payments', function () {
           irrf: 266.36,
           netValue: 1244.69,
           details: {
-            startDate: '2014-11-06',
-            endDate: '2020-10-12',
-            completedMonths: 9,
+            grossValue: '13º proporcional para 9 meses',
+            firstInstallment: 'Valor líquido do 13º adiantado',
             inss: '(1045.00 x 7.5%) + (1044.60 x 9.0%) + (1044.80 x 12.0%) + (1365.60 x 14.0%) = 488.94',
-            irff: '(1903.98 x 0.0%) + (922.67 x 7.5%) + (924.40 x 15.0%) + (260.01 x 22.5%) = 266.36'
+            irrf: '(1903.98 x 0.0%) + (922.67 x 7.5%) + (924.40 x 15.0%) + (260.01 x 22.5%) = 266.36'
           }
         }
       }
@@ -111,10 +112,9 @@ describe('Partial Payments', function () {
           irrf: 0,
           netValue: 1000,
           details: {
-            startDate: '2014-11-06',
-            endDate: '2020-10-12',
-            endDateWithAdvanceNotice: '2020-11-26',
-            completedMonths: 2
+            grossValue: '13º proporcional para 2 meses',
+            inss: 'Não há incidência de INSS para décimo terceiro indenizado',
+            irrf: 'Não há IRRF para décimo terceiro indenizado'
           }
         }
       }
@@ -137,7 +137,12 @@ describe('Partial Payments', function () {
           grossValue: 4000,
           inss: 0,
           irrf: 0,
-          netValue: 4000
+          netValue: 4000,
+          details: {
+            grossValue: 'Férias proporcionais para 10 dias',
+            inss: 'Não há incidência de INSS para férias indenizadas',
+            irrf: 'Não há IRRF para férias indenizadas'
+          }
         }
       }
     ]
@@ -157,7 +162,12 @@ describe('Partial Payments', function () {
         grossValue: 0,
         inss: 0,
         irrf: 0,
-        netValue: 0
+        netValue: 0,
+        details: {
+          grossValue: 'Férias proporcionais para 0 dias',
+          inss: 'Não há incidência de INSS para férias indenizadas',
+          irrf: 'Não há IRRF para férias indenizadas'
+        }
       }
       const result = paidTimeOffIndemnified({ grossSalary, remainingDaysPaidTimeOff })
       expect(result).to.eql(expectedResult)
@@ -176,9 +186,9 @@ describe('Partial Payments', function () {
           irrf: 0,
           netValue: 5555.55,
           details: {
-            completedMonths: 10,
-            startDate: '2014-01-06',
-            endDateWithAdvanceNotice: '2020-11-29'
+            grossValue: 'Férias proporcionais para 48 dias',
+            inss: 'Não há incidência de INSS para férias indenizadas',
+            irrf: 'Não há IRRF para férias indenizadas'
           }
         }
       }

@@ -27,7 +27,7 @@ module.exports = {
 
   detailedINSS: function detailedINSS (payment) {
     if (payment > inssMaxRangeValue) {
-      return `para salários acima de ${inssMaxRangeValue}, paga-se o teto de ${inssMaxValueToPay}`
+      return `Para salários acima de ${inssMaxRangeValue}, paga-se o teto de ${inssMaxValueToPay}`
     }
 
     const initialValuesForReduce = {

@@ -10,13 +10,29 @@ const {
   completedMonthsFromAniversary
 } = require('./dateHelper')
 
-function salaryRemainer ({ grossSalary, endDate }) {
-  const daysForSalaryRemainer = completedDaysFromMonth(endDate)
+function fgtsDescription (grossValue) {
+  return `8% sobre ${grossValue}`
+}
 
-  const grossValue = roundCurrency(grossSalary * daysForSalaryRemainer / 30)
+function porportinalSalaryDescription (days) {
+  return `Salário proporcional para ${days} dias`
+}
+
+function porportinalThirteenthSalaryDescription (months) {
+  return `13º proporcional para ${months} meses`
+}
+
+function porportinalPaidTimeOffDescription (days) {
+  return `Férias proporcionais para ${days} dias`
+}
+
+function salaryRemainer ({ grossSalary, endDate, irrfDeductions }) {
+  const days = completedDaysFromMonth(endDate)
+
+  const grossValue = roundCurrency(grossSalary * days / 30)
   const fgts = roundCurrency(grossValue * 0.08)
   const inss = INSS(grossValue)
-  const irrf = IRRF(grossValue - inss)
+  const irrf = IRRF(grossValue - inss, irrfDeductions)
   const netValue = grossValue - inss - irrf
 
   return {
@@ -26,16 +42,16 @@ function salaryRemainer ({ grossSalary, endDate }) {
     irrf,
     netValue,
     details: {
-      days: daysForSalaryRemainer,
+      grossValue: porportinalSalaryDescription(days),
+      fgts: fgtsDescription(grossValue),
       inss: detailedINSS(grossValue),
-      irff: detailedIRRF(grossValue - inss)
+      irrf: detailedIRRF(grossValue - inss, irrfDeductions)
     }
   }
 }
 
 function advanceNoticeSalary ({ grossSalary, startDate, endDate }) {
   const days = advanceNoticeDays({ startDate, endDate })
-  const endDateWithAdvanceNotice = addDays(endDate, days)
 
   const grossValue = roundCurrency(grossSalary * days / 30)
   const fgts = roundCurrency(grossValue * 0.08)
@@ -50,19 +66,20 @@ function advanceNoticeSalary ({ grossSalary, startDate, endDate }) {
     irrf,
     netValue,
     details: {
-      advanceNoticeDays: days,
-      endDateWithAdvanceNotice,
-      inss: detailedINSS(grossValue)
+      grossValue: porportinalSalaryDescription(days),
+      fgts: fgtsDescription(grossValue),
+      inss: detailedINSS(grossValue),
+      irrf: 'Não há IRRF para aviso prévio'
     }
   }
 }
 
-function proportionalThirteenthSalary ({ grossSalary, startDate, endDate, firstInstallment }) {
+function proportionalThirteenthSalary ({ grossSalary, startDate, endDate, firstInstallment, irrfDeductions }) {
   const completedMonths = completedMonthsFromYear(endDate)
 
   const grossValue = roundCurrency(grossSalary * completedMonths / 12)
   const inss = INSS(grossValue)
-  const irrf = IRRF(grossValue - inss)
+  const irrf = IRRF(grossValue - inss, irrfDeductions)
   const netValue = roundCurrency(grossValue - inss - irrf - firstInstallment)
 
   return {
@@ -72,11 +89,10 @@ function proportionalThirteenthSalary ({ grossSalary, startDate, endDate, firstI
     irrf,
     netValue,
     details: {
-      startDate,
-      endDate,
-      completedMonths,
+      grossValue: porportinalThirteenthSalaryDescription(completedMonths),
+      firstInstallment: 'Valor líquido do 13º adiantado',
       inss: detailedINSS(grossValue),
-      irff: detailedIRRF(grossValue - inss)
+      irrf: detailedIRRF(grossValue - inss, irrfDeductions)
     }
   }
 }
@@ -97,10 +113,9 @@ function indemnifiedThirteenthSalary ({ grossSalary, startDate, endDate }) {
     irrf,
     netValue,
     details: {
-      startDate,
-      endDate,
-      endDateWithAdvanceNotice,
-      completedMonths
+      grossValue: porportinalThirteenthSalaryDescription(completedMonths),
+      inss: 'Não há incidência de INSS para décimo terceiro indenizado',
+      irrf: 'Não há IRRF para décimo terceiro indenizado'
     }
   }
 }
@@ -120,7 +135,12 @@ function paidTimeOffIndemnified ({ grossSalary, remainingDaysPaidTimeOff }) {
     grossValue,
     inss,
     irrf,
-    netValue
+    netValue,
+    details: {
+      grossValue: porportinalPaidTimeOffDescription(remainingDaysPaidTimeOff),
+      inss: 'Não há incidência de INSS para férias indenizadas',
+      irrf: 'Não há IRRF para férias indenizadas'
+    }
   }
 }
 
@@ -142,9 +162,9 @@ function advanceNoticePaidTimeOff ({ grossSalary, startDate, endDate }) {
     irrf,
     netValue,
     details: {
-      startDate,
-      endDateWithAdvanceNotice,
-      completedMonths
+      grossValue: porportinalPaidTimeOffDescription(days),
+      inss: 'Não há incidência de INSS para férias indenizadas',
+      irrf: 'Não há IRRF para férias indenizadas'
     }
   }
 }
