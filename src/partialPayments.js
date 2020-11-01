@@ -100,7 +100,7 @@ function proportionalThirteenthSalary ({ grossSalary, startDate, endDate, firstI
 function indemnifiedThirteenthSalary ({ grossSalary, startDate, endDate }) {
   const days = advanceNoticeDays({ startDate, endDate })
   const endDateWithAdvanceNotice = addDays(endDate, days)
-  const completedMonths = completedMonthsFromYear(endDateWithAdvanceNotice) - completedMonthsFromYear(endDate)
+  const completedMonths = (completedMonthsFromYear(endDateWithAdvanceNotice) - completedMonthsFromYear(endDate) + 12) % 12
 
   const grossValue = roundCurrency(grossSalary * completedMonths / 12)
   const inss = 0

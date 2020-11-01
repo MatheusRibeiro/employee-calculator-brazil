@@ -117,6 +117,22 @@ describe('Partial Payments', function () {
             irrf: 'Não há IRRF para décimo terceiro indenizado'
           }
         }
+      },
+      {
+        grossSalary: 6000,
+        startDate: '2012-12-12',
+        endDate: '2020-11-14',
+        expectedResult: {
+          grossValue: 1000,
+          inss: 0,
+          irrf: 0,
+          netValue: 1000,
+          details: {
+            grossValue: '13º proporcional para 2 meses',
+            inss: 'Não há incidência de INSS para décimo terceiro indenizado',
+            irrf: 'Não há IRRF para décimo terceiro indenizado'
+          }
+        }
       }
     ]
 
