@@ -83,8 +83,8 @@ function terminationOfEmploymentCalculus ({
     fgts: {
       base: {
         deposited: depositedFgts,
-        overProportionalThirteenthSalary: proportionalThirteenthSalaryResult.fgts,
         overSalaryRemainer: salaryRemainerResult.fgts,
+        overProportionalThirteenthSalary: proportionalThirteenthSalaryResult.fgts,
         netValue: baseFgts,
         details: {
           deposited: 'Saldo atual + valor sacado',
