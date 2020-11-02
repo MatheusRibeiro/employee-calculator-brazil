@@ -81,16 +81,31 @@ function terminationOfEmploymentCalculus ({
       total: roundCurrency(paidTimeOffResult.netValue + advanceNoticePaidTimeOffResult.netValue)
     },
     fgts: {
-      total: finalFgtsBalance,
-      details: {
+      base: {
         deposited: depositedFgts,
         overProportionalThirteenthSalary: proportionalThirteenthSalaryResult.fgts,
         overSalaryRemainer: salaryRemainerResult.fgts,
+        netValue: baseFgts,
+        details: {
+          deposited: 'Saldo atual + valor sacado',
+          overProportionalThirteenthSalary: proportionalThirteenthSalaryResult.details.fgts,
+          overSalaryRemainer: salaryRemainerResult.details.fgts
+        }
+      },
+      total: {
         base: baseFgts,
         fourtyPercentPenalty: fgtsPenalty,
         cashedFgts: cashedFgts,
         overAdvanceNoticeSalary: advanceNoticeResult.fgts,
-        overIndemnifiedThirteenthSalary: indemnifiedThirteenthSalaryResult.fgts
+        overIndemnifiedThirteenthSalary: indemnifiedThirteenthSalaryResult.fgts,
+        netValue: finalFgtsBalance,
+        details: {
+          base: 'Valor base para multa de 40%',
+          fourtyPercentPenalty: `40% de ${baseFgts}`,
+          cashedFgts: 'Valor já sacado',
+          overAdvanceNoticeSalary: `${advanceNoticeResult.details.fgts} (verba indenizatória, não entra no cálculo da multa)`,
+          overIndemnifiedThirteenthSalary: `${indemnifiedThirteenthSalaryResult.details.fgts} (verba indenizatória, não entra no cálculo da multa)`
+        }
       }
     },
     total: {
