@@ -106,16 +106,31 @@ describe('Full Termination Calculus', function () {
           total: 10000
         },
         fgts: {
-          total: 57345.6,
-          details: {
+          base: {
             deposited: 40000,
             overProportionalThirteenthSalary: 400,
             overSalaryRemainer: 64,
+            netValue: 40464,
+            details: {
+              deposited: 'Saldo atual + valor sacado',
+              overProportionalThirteenthSalary: '8% sobre 5000',
+              overSalaryRemainer: '8% sobre 800'
+            }
+          },
+          total: {
             base: 40464,
             fourtyPercentPenalty: 16185.6,
             cashedFgts: 200,
             overAdvanceNoticeSalary: 816,
-            overIndemnifiedThirteenthSalary: 80
+            overIndemnifiedThirteenthSalary: 80,
+            netValue: 57345.6,
+            details: {
+              base: 'Valor base para multa de 40%',
+              fourtyPercentPenalty: '40% de 40464',
+              cashedFgts: 'Valor já sacado',
+              overAdvanceNoticeSalary: '8% sobre 1000 (verba indenizatória, não entra no cálculo da multa)',
+              overIndemnifiedThirteenthSalary: '8% sobre 10200 (verba indenizatória, não entra no cálculo da multa)'
+            }
           }
         },
         total: {
