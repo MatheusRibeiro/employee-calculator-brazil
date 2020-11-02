@@ -98,7 +98,7 @@ describe('Full Termination Calculus', function () {
             irrf: 0,
             netValue: 2000,
             details: {
-              grossValue: 'Férias proporcionais do ano aquisitivo vigente, referente ao período de 23/09/2020 até 25/12/2020 (após acréscimo de 51 dias do aviso prévio) totalizando 3 meses',
+              grossValue: 'Férias proporcionais referente ao período de 23/09/2020 até 25/12/2020 (após acréscimo de 51 dias do aviso prévio) totalizando 3 meses',
               inss: 'Não há incidência de INSS para férias indenizadas',
               irrf: 'Não há IRRF para férias indenizadas'
             }
