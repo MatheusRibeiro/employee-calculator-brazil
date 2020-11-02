@@ -155,7 +155,7 @@ describe('Partial Payments', function () {
           irrf: 0,
           netValue: 4000,
           details: {
-            grossValue: 'Férias proporcionais para 10 dias',
+            grossValue: 'Férias vencidas com 10 dias não utilizados',
             inss: 'Não há incidência de INSS para férias indenizadas',
             irrf: 'Não há IRRF para férias indenizadas'
           }
@@ -180,7 +180,7 @@ describe('Partial Payments', function () {
         irrf: 0,
         netValue: 0,
         details: {
-          grossValue: 'Férias proporcionais para 0 dias',
+          grossValue: 'Férias vencidas com 0 dias não utilizados',
           inss: 'Não há incidência de INSS para férias indenizadas',
           irrf: 'Não há IRRF para férias indenizadas'
         }
@@ -202,7 +202,23 @@ describe('Partial Payments', function () {
           irrf: 0,
           netValue: 5555.55,
           details: {
-            grossValue: 'Férias proporcionais para 48 dias',
+            grossValue: 'Férias prorcionais do ano aquisitivo vigente, referente ao período de 2014-01-06 até 2020-11-29 (após acréscimo de 48 dias do aviso pévio) totalizando 10 meses',
+            inss: 'Não há incidência de INSS para férias indenizadas',
+            irrf: 'Não há IRRF para férias indenizadas'
+          }
+        }
+      },
+      {
+        grossSalary: 1200,
+        startDate: '2018-09-11',
+        endDate: '2020-04-10',
+        expectedResult: {
+          grossValue: 1066.66,
+          inss: 0,
+          irrf: 0,
+          netValue: 1066.66,
+          details: {
+            grossValue: 'Férias prorcionais do ano aquisitivo vigente, referente ao período de 2018-09-11 até 2020-05-13 (após acréscimo de 33 dias do aviso pévio) totalizando 8 meses',
             inss: 'Não há incidência de INSS para férias indenizadas',
             irrf: 'Não há IRRF para férias indenizadas'
           }

@@ -83,7 +83,7 @@ describe('Full Termination Calculus', function () {
             irrf: 0,
             netValue: 8000,
             details: {
-              grossValue: 'Férias proporcionais para 30 dias',
+              grossValue: 'Férias vencidas com 30 dias não utilizados',
               inss: 'Não há incidência de INSS para férias indenizadas',
               irrf: 'Não há IRRF para férias indenizadas'
             }
@@ -94,7 +94,7 @@ describe('Full Termination Calculus', function () {
             irrf: 0,
             netValue: 2000,
             details: {
-              grossValue: 'Férias proporcionais para 51 dias',
+              grossValue: 'Férias prorcionais do ano aquisitivo vigente, referente ao período de 2013-09-23 até 2020-12-25 (após acréscimo de 51 dias do aviso pévio) totalizando 3 meses',
               inss: 'Não há incidência de INSS para férias indenizadas',
               irrf: 'Não há IRRF para férias indenizadas'
             }

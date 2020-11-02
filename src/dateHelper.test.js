@@ -33,6 +33,12 @@ describe('Date Helper', function () {
       endDate: '2020-01-04',
       expectedCompletedYears: 1,
       expectedMonthsAfterAniversary: 2
+    },
+    {
+      startDate: '2018-09-11',
+      endDate: '2020-04-11',
+      expectedCompletedYears: 1,
+      expectedMonthsAfterAniversary: 7
     }
   ]
 
