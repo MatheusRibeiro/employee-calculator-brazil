@@ -42,7 +42,8 @@ function terminationOfEmploymentCalculus ({
     irrfDeductions
   })
 
-  const baseFgts = currentFgtsBalance + cashedFgts
+  const depositedFgts = currentFgtsBalance + cashedFgts
+  const baseFgts = depositedFgts + salaryRemainerResult.fgts + proportionalThirteenthSalaryResult.fgts
   const fgtsPenalty = baseFgts * 0.4
   const finalFgtsBalance = roundCurrency(
     currentFgtsBalance +
@@ -82,12 +83,13 @@ function terminationOfEmploymentCalculus ({
     fgts: {
       total: finalFgtsBalance,
       details: {
+        deposited: depositedFgts,
+        overProportionalThirteenthSalary: proportionalThirteenthSalaryResult.fgts,
+        overSalaryRemainer: salaryRemainerResult.fgts,
         base: baseFgts,
         fourtyPercentPenalty: fgtsPenalty,
         cashedFgts: cashedFgts,
-        overSalaryRemainer: salaryRemainerResult.fgts,
         overAdvanceNoticeSalary: advanceNoticeResult.fgts,
-        overProportionalThirteenthSalary: proportionalThirteenthSalaryResult.fgts,
         overIndemnifiedThirteenthSalary: indemnifiedThirteenthSalaryResult.fgts
       }
     },

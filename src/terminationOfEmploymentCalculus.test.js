@@ -106,21 +106,22 @@ describe('Full Termination Calculus', function () {
           total: 10000
         },
         fgts: {
-          total: 57160,
+          total: 57345.6,
           details: {
-            base: 40000,
-            fourtyPercentPenalty: 16000,
-            cashedFgts: 200,
-            overSalaryRemainer: 64,
-            overAdvanceNoticeSalary: 816,
+            deposited: 40000,
             overProportionalThirteenthSalary: 400,
+            overSalaryRemainer: 64,
+            base: 40464,
+            fourtyPercentPenalty: 16185.6,
+            cashedFgts: 200,
+            overAdvanceNoticeSalary: 816,
             overIndemnifiedThirteenthSalary: 80
           }
         },
         total: {
           salary: 25403.76,
-          fgts: 57160,
-          netValue: 82563.75
+          fgts: 57345.6,
+          netValue: 82749.36
         }
       }
     }
