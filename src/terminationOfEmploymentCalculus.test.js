@@ -12,7 +12,12 @@ describe('Full Termination Calculus', function () {
         currentFgtsBalance: 39800,
         cashedFgts: 200,
         remainingDaysPaidTimeOff: 30,
-        thirteenthSalaryFirstInstallment: 0
+        thirteenthSalaryFirstInstallment: 0,
+        irrfDeductions: {
+          numberOfDependents: 1,
+          alimony: 200,
+          otherDeductions: 50
+        }
       },
       expectedOutput: {
         salary: {
@@ -25,7 +30,7 @@ describe('Full Termination Calculus', function () {
             details: {
               grossValue: 'Salário proporcional para 4 dias',
               inss: '(800.00 x 7.5%) = 60',
-              irrf: '(740.00 x 0.0%) = 0',
+              irrf: '(300.41 x 0.0%) = 0',
               fgts: '8% sobre 800'
             }
           },
@@ -49,13 +54,13 @@ describe('Full Termination Calculus', function () {
             grossValue: 5000,
             firstInstallment: 0,
             inss: 558.94,
-            irrf: 363.11,
-            netValue: 4077.94,
+            irrf: 264.2,
+            netValue: 4176.85,
             details: {
               grossValue: '13º proporcional para 10 meses',
               firstInstallment: 'Valor líquido do 13º adiantado',
               inss: '(1045.00 x 7.5%) + (1044.60 x 9.0%) + (1044.80 x 12.0%) + (1865.60 x 14.0%) = 558.94',
-              irrf: '(1903.98 x 0.0%) + (922.67 x 7.5%) + (924.40 x 15.0%) + (690.01 x 22.5%) = 363.11'
+              irrf: '(1903.98 x 0.0%) + (922.67 x 7.5%) + (924.40 x 15.0%) + (250.42 x 22.5%) = 264.2'
             }
           },
           indemnified: {
@@ -69,7 +74,7 @@ describe('Full Termination Calculus', function () {
               irrf: 'Não há IRRF para décimo terceiro indenizado'
             }
           },
-          total: 5077.94
+          total: 5176.85
         },
         paidTimeOff: {
           full: {
@@ -107,9 +112,9 @@ describe('Full Termination Calculus', function () {
           }
         },
         total: {
-          salary: 25304.85,
+          salary: 25403.76,
           fgts: 56680,
-          netValue: 81984.85
+          netValue: 82083.75
         }
       }
     }

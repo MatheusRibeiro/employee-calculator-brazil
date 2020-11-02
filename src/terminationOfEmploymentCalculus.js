@@ -21,7 +21,7 @@ function terminationOfEmploymentCalculus ({
   cashedFgts,
   remainingDaysPaidTimeOff,
   thirteenthSalaryFirstInstallment,
-  irrfDeductions = {}
+  irrfDeductions
 }) {
   const salaryRemainerResult = salaryRemainer({ grossSalary, endDate, irrfDeductions })
   const advanceNoticeResult = advanceNoticeSalary({ grossSalary, startDate, endDate })
