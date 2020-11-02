@@ -14,13 +14,13 @@ describe('Date Helper', function () {
       startDate: '2013-09-13',
       endDate: '2020-11-04',
       expectedCompletedYears: 7,
-      expectedMonthsAfterAniversary: 1
+      expectedMonthsAfterAniversary: 2
     },
     {
       startDate: '2019-11-05',
       endDate: '2020-11-04',
       expectedCompletedYears: 0,
-      expectedMonthsAfterAniversary: 11
+      expectedMonthsAfterAniversary: 12
     },
     {
       startDate: '2019-11-05',
@@ -32,7 +32,7 @@ describe('Date Helper', function () {
       startDate: '2018-10-05',
       endDate: '2020-01-04',
       expectedCompletedYears: 1,
-      expectedMonthsAfterAniversary: 2
+      expectedMonthsAfterAniversary: 3
     },
     {
       startDate: '2018-09-11',

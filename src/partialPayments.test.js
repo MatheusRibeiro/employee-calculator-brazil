@@ -197,12 +197,12 @@ describe('Partial Payments', function () {
         startDate: '2014-01-06',
         endDate: '2020-10-12',
         expectedResult: {
-          grossValue: 5555.55,
+          grossValue: 6111.11,
           inss: 0,
           irrf: 0,
-          netValue: 5555.55,
+          netValue: 6111.11,
           details: {
-            grossValue: 'Férias prorcionais do ano aquisitivo vigente, referente ao período de 2014-01-06 até 2020-11-29 (após acréscimo de 48 dias do aviso pévio) totalizando 10 meses',
+            grossValue: 'Férias prorcionais do ano aquisitivo vigente, referente ao período de 2014-01-06 até 2020-11-29 (após acréscimo de 48 dias do aviso pévio) totalizando 11 meses',
             inss: 'Não há incidência de INSS para férias indenizadas',
             irrf: 'Não há IRRF para férias indenizadas'
           }
@@ -219,6 +219,22 @@ describe('Partial Payments', function () {
           netValue: 1066.66,
           details: {
             grossValue: 'Férias prorcionais do ano aquisitivo vigente, referente ao período de 2018-09-11 até 2020-05-13 (após acréscimo de 33 dias do aviso pévio) totalizando 8 meses',
+            inss: 'Não há incidência de INSS para férias indenizadas',
+            irrf: 'Não há IRRF para férias indenizadas'
+          }
+        }
+      },
+      {
+        grossSalary: 2500,
+        startDate: '2018-11-01',
+        endDate: '2020-03-20',
+        expectedResult: {
+          grossValue: 1666.66,
+          inss: 0,
+          irrf: 0,
+          netValue: 1666.66,
+          details: {
+            grossValue: 'Férias prorcionais do ano aquisitivo vigente, referente ao período de 2018-11-01 até 2020-04-22 (após acréscimo de 33 dias do aviso pévio) totalizando 6 meses',
             inss: 'Não há incidência de INSS para férias indenizadas',
             irrf: 'Não há IRRF para férias indenizadas'
           }

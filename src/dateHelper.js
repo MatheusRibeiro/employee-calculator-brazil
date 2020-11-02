@@ -9,7 +9,19 @@ function completedYears (startDate, endDate) {
 function completedMonthsFromAniversary (startDate, endDate) {
   const startsAt = moment(`${startDate} 00:00`)
   const endsAt = moment(`${endDate} 23:59`)
-  return endsAt.diff(startsAt, 'months') % 12
+
+  const months = endsAt.diff(startsAt, 'months') % 12
+
+  const daysFromStartMonth = completedDaysFromMonth(startDate)
+  const daysFromEndMonth = completedDaysFromMonth(endDate)
+  const daysForCompletedMonth = 30
+  const remainerDays = (daysFromEndMonth - daysFromStartMonth + daysForCompletedMonth) % daysForCompletedMonth
+  const minDaysForCompletedMonth = 15
+  if (remainerDays >= minDaysForCompletedMonth) {
+    return months + 1
+  }
+
+  return months
 }
 
 function completedMonthsFromYear (referenceDate) {
