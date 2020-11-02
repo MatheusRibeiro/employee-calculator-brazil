@@ -200,15 +200,15 @@ describe('Partial Payments', function () {
     const fixtures = [
       {
         grossSalary: 5000,
-        startDate: '2014-01-06',
-        endDate: '2020-10-12',
+        startDate: '2013-01-06',
+        endDate: '2019-10-12',
         expectedResult: {
           grossValue: 6111.11,
           inss: 0,
           irrf: 0,
           netValue: 6111.11,
           details: {
-            grossValue: 'Férias proporcionais do ano aquisitivo vigente, referente ao período de 06/01/2014 até 29/11/2020 (após acréscimo de 48 dias do aviso prévio) totalizando 11 meses',
+            grossValue: 'Férias proporcionais do ano aquisitivo vigente, referente ao período de 06/01/2019 até 29/11/2019 (após acréscimo de 48 dias do aviso prévio) totalizando 11 meses',
             inss: 'Não há incidência de INSS para férias indenizadas',
             irrf: 'Não há IRRF para férias indenizadas'
           }
@@ -224,7 +224,7 @@ describe('Partial Payments', function () {
           irrf: 0,
           netValue: 1066.66,
           details: {
-            grossValue: 'Férias proporcionais do ano aquisitivo vigente, referente ao período de 11/09/2018 até 13/05/2020 (após acréscimo de 33 dias do aviso prévio) totalizando 8 meses',
+            grossValue: 'Férias proporcionais do ano aquisitivo vigente, referente ao período de 11/09/2020 até 13/05/2020 (após acréscimo de 33 dias do aviso prévio) totalizando 8 meses',
             inss: 'Não há incidência de INSS para férias indenizadas',
             irrf: 'Não há IRRF para férias indenizadas'
           }
@@ -240,7 +240,7 @@ describe('Partial Payments', function () {
           irrf: 0,
           netValue: 1666.66,
           details: {
-            grossValue: 'Férias proporcionais do ano aquisitivo vigente, referente ao período de 01/11/2018 até 22/04/2020 (após acréscimo de 33 dias do aviso prévio) totalizando 6 meses',
+            grossValue: 'Férias proporcionais do ano aquisitivo vigente, referente ao período de 01/11/2020 até 22/04/2020 (após acréscimo de 33 dias do aviso prévio) totalizando 6 meses',
             inss: 'Não há incidência de INSS para férias indenizadas',
             irrf: 'Não há IRRF para férias indenizadas'
           }

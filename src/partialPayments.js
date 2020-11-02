@@ -171,7 +171,7 @@ function advanceNoticePaidTimeOff ({ grossSalary, startDate, endDate }) {
   const irrf = 0
   const netValue = grossValue - inss - irrf
 
-  const startDateBrFormat = moment(startDate).format('DD/MM/YYYY')
+  const lastAniversaryBrFormat = `${moment(startDate).format('DD/MM')}/${moment(endDate).format('YYYY')}`
   const endDateWithAdvanceNoticeBrFormat = moment(endDateWithAdvanceNotice).format('DD/MM/YYYY')
 
   return {
@@ -180,7 +180,7 @@ function advanceNoticePaidTimeOff ({ grossSalary, startDate, endDate }) {
     irrf,
     netValue,
     details: {
-      grossValue: `Férias proporcionais do ano aquisitivo vigente, referente ao período de ${startDateBrFormat} até ${endDateWithAdvanceNoticeBrFormat} (após acréscimo de ${days} dias do aviso prévio) totalizando ${completedMonths} meses`,
+      grossValue: `Férias proporcionais do ano aquisitivo vigente, referente ao período de ${lastAniversaryBrFormat} até ${endDateWithAdvanceNoticeBrFormat} (após acréscimo de ${days} dias do aviso prévio) totalizando ${completedMonths} meses`,
       inss: 'Não há incidência de INSS para férias indenizadas',
       irrf: 'Não há IRRF para férias indenizadas'
     }
