@@ -13,6 +13,10 @@ function sumNetValues (total, { netValue }) {
   return total
 }
 
+function sumSalaries (salaryResults) {
+  return roundCurrency(salaryResults.reduce(sumNetValues, 0))
+}
+
 function terminationOfEmploymentCalculus ({
   grossSalary,
   startDate,
@@ -28,12 +32,6 @@ function terminationOfEmploymentCalculus ({
 
   const paidTimeOffResult = paidTimeOffIndemnified({ grossSalary, remainingDaysPaidTimeOff })
   const advanceNoticePaidTimeOffResult = advanceNoticePaidTimeOff({ grossSalary, startDate, endDate })
-
-  const indemnifiedThirteenthSalaryResult = indemnifiedThirteenthSalary({
-    grossSalary,
-    startDate,
-    endDate
-  })
   const proportionalThirteenthSalaryResult = proportionalThirteenthSalary({
     grossSalary,
     startDate,
@@ -41,11 +39,26 @@ function terminationOfEmploymentCalculus ({
     firstInstallment: thirteenthSalaryFirstInstallment,
     irrfDeductions
   })
+  const indemnifiedThirteenthSalaryResult = indemnifiedThirteenthSalary({
+    grossSalary,
+    startDate,
+    endDate
+  })
 
-  const depositedFgts = currentFgtsBalance + cashedFgts
-  const baseFgts = depositedFgts + salaryRemainerResult.fgts + proportionalThirteenthSalaryResult.fgts
-  const fgtsPenalty = baseFgts * 0.4
-  const finalFgtsBalance = roundCurrency(
+  const salaryTotal = sumSalaries([
+    salaryRemainerResult,
+    advanceNoticeResult,
+    paidTimeOffResult,
+    advanceNoticePaidTimeOffResult,
+    proportionalThirteenthSalaryResult,
+    indemnifiedThirteenthSalaryResult
+  ])
+
+  const depositedFgts = roundCurrency(currentFgtsBalance + cashedFgts)
+  const baseFgts = roundCurrency(depositedFgts + salaryRemainerResult.fgts + proportionalThirteenthSalaryResult.fgts)
+  const fgtsPenalty = roundCurrency(baseFgts * 0.4)
+
+  const fgtsTotal = roundCurrency(
     currentFgtsBalance +
     fgtsPenalty +
     salaryRemainerResult.fgts +
@@ -53,16 +66,6 @@ function terminationOfEmploymentCalculus ({
     proportionalThirteenthSalaryResult.fgts +
     indemnifiedThirteenthSalaryResult.fgts
   )
-
-  const salaryResults = [
-    salaryRemainerResult,
-    advanceNoticeResult,
-    paidTimeOffResult,
-    advanceNoticePaidTimeOffResult,
-    proportionalThirteenthSalaryResult,
-    indemnifiedThirteenthSalaryResult
-  ]
-  const totalSalary = roundCurrency(salaryResults.reduce(sumNetValues, 0))
 
   return {
     salary: {
@@ -98,7 +101,7 @@ function terminationOfEmploymentCalculus ({
         cashedFgts: cashedFgts,
         overAdvanceNoticeSalary: advanceNoticeResult.fgts,
         overIndemnifiedThirteenthSalary: indemnifiedThirteenthSalaryResult.fgts,
-        netValue: finalFgtsBalance,
+        netValue: fgtsTotal,
         details: {
           base: 'Valor base para multa de 40%',
           fourtyPercentPenalty: `40% de ${baseFgts}`,
@@ -109,9 +112,9 @@ function terminationOfEmploymentCalculus ({
       }
     },
     total: {
-      salary: totalSalary,
-      fgts: finalFgtsBalance,
-      netValue: roundCurrency(totalSalary + finalFgtsBalance)
+      salary: salaryTotal,
+      fgts: fgtsTotal,
+      netValue: roundCurrency(salaryTotal + fgtsTotal)
     }
   }
 }
