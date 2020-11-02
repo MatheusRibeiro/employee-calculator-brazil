@@ -176,7 +176,7 @@ describe('Full Termination Calculus', function () {
     })
 
     it('returns the FGTS total', function () {
-      expect(output.fgts.total).to.equal(expectedOutput.fgts.total)
+      expect(output.fgts.total.netValue).to.equal(expectedOutput.fgts.total.netValue)
     })
     it('returns the details of FGTS calculus', function () {
       expect(output.fgts.details).to.eql(expectedOutput.fgts.details)
