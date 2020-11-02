@@ -48,7 +48,9 @@ function terminationOfEmploymentCalculus ({
     currentFgtsBalance +
     fgtsPenalty +
     salaryRemainerResult.fgts +
-    advanceNoticeResult.fgts
+    advanceNoticeResult.fgts +
+    proportionalThirteenthSalaryResult.fgts +
+    indemnifiedThirteenthSalaryResult.fgts
   )
 
   const salaryResults = [
@@ -84,7 +86,9 @@ function terminationOfEmploymentCalculus ({
         fourtyPercentPenalty: fgtsPenalty,
         cashedFgts: cashedFgts,
         overSalaryRemainer: salaryRemainerResult.fgts,
-        overAdvanceNoticeSalary: advanceNoticeResult.fgts
+        overAdvanceNoticeSalary: advanceNoticeResult.fgts,
+        overProportionalThirteenthSalary: proportionalThirteenthSalaryResult.fgts,
+        overIndemnifiedThirteenthSalary: indemnifiedThirteenthSalaryResult.fgts
       }
     },
     total: {

@@ -53,23 +53,27 @@ describe('Full Termination Calculus', function () {
           proportional: {
             grossValue: 5000,
             firstInstallment: 0,
+            fgts: 400,
             inss: 558.94,
             irrf: 264.2,
             netValue: 4176.85,
             details: {
               grossValue: '13º proporcional para 10 meses',
               firstInstallment: 'Valor líquido do 13º adiantado',
+              fgts: '8% sobre 5000',
               inss: '(1045.00 x 7.5%) + (1044.60 x 9.0%) + (1044.80 x 12.0%) + (1865.60 x 14.0%) = 558.94',
               irrf: '(1903.98 x 0.0%) + (922.67 x 7.5%) + (924.40 x 15.0%) + (250.42 x 22.5%) = 264.2'
             }
           },
           indemnified: {
             grossValue: 1000,
+            fgts: 80,
             inss: 0,
             irrf: 0,
             netValue: 1000,
             details: {
               grossValue: '13º proporcional para 2 meses',
+              fgts: '8% sobre 1000',
               inss: 'Não há incidência de INSS para décimo terceiro indenizado',
               irrf: 'Não há IRRF para décimo terceiro indenizado'
             }
@@ -102,19 +106,21 @@ describe('Full Termination Calculus', function () {
           total: 10000
         },
         fgts: {
-          total: 56680,
+          total: 57160,
           details: {
             base: 40000,
             fourtyPercentPenalty: 16000,
             cashedFgts: 200,
             overSalaryRemainer: 64,
-            overAdvanceNoticeSalary: 816
+            overAdvanceNoticeSalary: 816,
+            overProportionalThirteenthSalary: 400,
+            overIndemnifiedThirteenthSalary: 80
           }
         },
         total: {
           salary: 25403.76,
-          fgts: 56680,
-          netValue: 82083.75
+          fgts: 57160,
+          netValue: 82563.75
         }
       }
     }

@@ -79,6 +79,7 @@ function proportionalThirteenthSalary ({ grossSalary, startDate, endDate, firstI
   const completedMonths = completedMonthsFromYear(endDate)
 
   const grossValue = roundCurrency(grossSalary * completedMonths / monthsInYear)
+  const fgts = roundCurrency(grossValue * fgtsRate)
   const inss = INSS(grossValue)
   const irrf = IRRF(grossValue - inss, irrfDeductions)
   const netValue = roundCurrency(grossValue - inss - irrf - firstInstallment)
@@ -86,12 +87,14 @@ function proportionalThirteenthSalary ({ grossSalary, startDate, endDate, firstI
   return {
     grossValue,
     firstInstallment,
+    fgts,
     inss,
     irrf,
     netValue,
     details: {
       grossValue: porportinalThirteenthSalaryDescription(completedMonths),
       firstInstallment: 'Valor líquido do 13º adiantado',
+      fgts: fgtsDescription(grossValue),
       inss: detailedINSS(grossValue),
       irrf: detailedIRRF(grossValue - inss, irrfDeductions)
     }
@@ -110,17 +113,20 @@ function indemnifiedThirteenthSalary ({ grossSalary, startDate, endDate }) {
   const completedMonths = (monthsDiff + monthsInYear) % monthsInYear
 
   const grossValue = roundCurrency(grossSalary * completedMonths / monthsInYear)
+  const fgts = roundCurrency(grossValue * fgtsRate)
   const inss = 0
   const irrf = 0
   const netValue = roundCurrency(grossValue - inss - irrf)
 
   return {
     grossValue,
+    fgts,
     inss,
     irrf,
     netValue,
     details: {
       grossValue: porportinalThirteenthSalaryDescription(completedMonths),
+      fgts: fgtsDescription(grossValue),
       inss: 'Não há incidência de INSS para décimo terceiro indenizado',
       irrf: 'Não há IRRF para décimo terceiro indenizado'
     }

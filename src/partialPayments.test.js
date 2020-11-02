@@ -79,12 +79,14 @@ describe('Partial Payments', function () {
         expectedResult: {
           grossValue: 4500,
           firstInstallment: 2500,
+          fgts: 360,
           inss: 488.94,
           irrf: 266.36,
           netValue: 1244.69,
           details: {
             grossValue: '13º proporcional para 9 meses',
             firstInstallment: 'Valor líquido do 13º adiantado',
+            fgts: '8% sobre 4500',
             inss: '(1045.00 x 7.5%) + (1044.60 x 9.0%) + (1044.80 x 12.0%) + (1365.60 x 14.0%) = 488.94',
             irrf: '(1903.98 x 0.0%) + (922.67 x 7.5%) + (924.40 x 15.0%) + (260.01 x 22.5%) = 266.36'
           }
@@ -108,11 +110,13 @@ describe('Partial Payments', function () {
         endDate: '2020-10-12',
         expectedResult: {
           grossValue: 1000,
+          fgts: 80,
           inss: 0,
           irrf: 0,
           netValue: 1000,
           details: {
             grossValue: '13º proporcional para 2 meses',
+            fgts: '8% sobre 1000',
             inss: 'Não há incidência de INSS para décimo terceiro indenizado',
             irrf: 'Não há IRRF para décimo terceiro indenizado'
           }
@@ -124,11 +128,13 @@ describe('Partial Payments', function () {
         endDate: '2020-11-14',
         expectedResult: {
           grossValue: 1000,
+          fgts: 80,
           inss: 0,
           irrf: 0,
           netValue: 1000,
           details: {
             grossValue: '13º proporcional para 2 meses',
+            fgts: '8% sobre 1000',
             inss: 'Não há incidência de INSS para décimo terceiro indenizado',
             irrf: 'Não há IRRF para décimo terceiro indenizado'
           }
