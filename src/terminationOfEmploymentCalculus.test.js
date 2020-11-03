@@ -71,29 +71,19 @@ describe('Full Termination Calculus', function () {
           }
         },
         paidTimeOff: {
-          full: {
-            grossValue: 8000,
-            inss: 0,
-            irrf: 0,
-            netValue: 8000,
-            details: {
-              grossValue: 'Férias vencidas com 30 dias não utilizados',
-              inss: 'Não há incidência de INSS para férias indenizadas',
-              irrf: 'Não há IRRF para férias indenizadas'
-            }
-          },
-          advanceNotice: {
-            grossValue: 2000,
-            inss: 0,
-            irrf: 0,
-            netValue: 2000,
-            details: {
-              grossValue: 'Férias proporcionais referente ao período de 23/09/2020 até 25/12/2020 (após acréscimo de 51 dias do aviso prévio) totalizando 3 meses',
-              inss: 'Não há incidência de INSS para férias indenizadas',
-              irrf: 'Não há IRRF para férias indenizadas'
-            }
-          },
-          total: 10000
+          baseValue: 7500,
+          third: 2500,
+          grossValue: 10000,
+          inss: 713.09,
+          irrf: 1563.65,
+          netValue: 7723.26,
+          details: {
+            baseValue: 'R$ 6000 (30 dias de férias vencidas) + R$ 1500 (3 meses completos)',
+            third: 'R$ 6000 * 1/3 (30 dias de férias vencidas) + R$ 1500 * 1/3 (3 meses completos)',
+            grossValue: 'R$ 8000 (30 dias de férias vencidas) + R$ 2000 (3 meses completos)',
+            inss: 'Para salários acima de 6101.06, paga-se o teto de 713.09',
+            irrf: '(1903.98 x 0.0%) + (922.67 x 7.5%) + (924.40 x 15.0%) + (913.63 x 22.5%) + (4182.64 x 27.5%) = 1563.65'
+          }
         },
         fgts: {
           base: {
@@ -124,9 +114,9 @@ describe('Full Termination Calculus', function () {
           }
         },
         total: {
-          salary: 25060.42,
+          salary: 22783.68,
           fgts: 57345.6,
-          netValue: 82406.01
+          netValue: 80129.28
         }
       }
     }
@@ -144,21 +134,12 @@ describe('Full Termination Calculus', function () {
     it('returns the total salary', function () {
       expect(output.salary.total).to.equal(expectedOutput.salary.total)
     })
-
-    it('returns  thirteenth salary', function () {
+    it('returns thirteenth salary', function () {
       expect(output.thirteenthSalary).to.eql(expectedOutput.thirteenthSalary)
     })
-
-    it('returns paid time off not taken', function () {
-      expect(output.paidTimeOff.full).to.eql(expectedOutput.paidTimeOff.full)
+    it('returns paid time off', function () {
+      expect(output.paidTimeOff).to.eql(expectedOutput.paidTimeOff)
     })
-    it('returns advance notice paid time off', function () {
-      expect(output.paidTimeOff.advanceNotice).to.eql(expectedOutput.paidTimeOff.advanceNotice)
-    })
-    it('returns the total paid time off', function () {
-      expect(output.paidTimeOff.total).to.equal(expectedOutput.paidTimeOff.total)
-    })
-
     it('returns the FGTS total', function () {
       expect(output.fgts.total.netValue).to.equal(expectedOutput.fgts.total.netValue)
     })

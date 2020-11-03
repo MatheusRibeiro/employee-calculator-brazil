@@ -5,8 +5,7 @@ describe('Partial Payments', function () {
     salaryRemainer,
     advanceNoticeSalary,
     thirteenthSalary,
-    paidTimeOffIndemnified,
-    advanceNoticePaidTimeOff
+    paidTimeOff
   } = require('./partialPayments')
 
   describe('Salary Remainer', function () {
@@ -107,107 +106,34 @@ describe('Partial Payments', function () {
     })
   })
 
-  describe('Indemnified Paid Time Off', function () {
+  describe('Paid Time Off', function () {
     const fixtures = [
       {
         grossSalary: 9000,
         remainingDaysPaidTimeOff: 10,
-        expectedResult: {
-          grossValue: 4000,
-          inss: 0,
-          irrf: 0,
-          netValue: 4000,
-          details: {
-            grossValue: 'Férias vencidas com 10 dias não utilizados',
-            inss: 'Não há incidência de INSS para férias indenizadas',
-            irrf: 'Não há IRRF para férias indenizadas'
-          }
-        }
-      }
-    ]
-
-    fixtures.forEach(function ({ grossSalary, remainingDaysPaidTimeOff, expectedResult }) {
-      it(`calculates the indemnified paid time off for ${grossSalary} gross salary`, function () {
-        const result = paidTimeOffIndemnified({ grossSalary, remainingDaysPaidTimeOff })
-        expect(result).to.eql(expectedResult)
-      })
-    })
-
-    it('return empty values when there is no time off', function () {
-      const grossSalary = 10000
-      const remainingDaysPaidTimeOff = 0
-
-      const expectedResult = {
-        grossValue: 0,
-        inss: 0,
-        irrf: 0,
-        netValue: 0,
-        details: {
-          grossValue: 'Férias vencidas com 0 dias não utilizados',
-          inss: 'Não há incidência de INSS para férias indenizadas',
-          irrf: 'Não há IRRF para férias indenizadas'
-        }
-      }
-      const result = paidTimeOffIndemnified({ grossSalary, remainingDaysPaidTimeOff })
-      expect(result).to.eql(expectedResult)
-    })
-  })
-
-  describe('Advance Notice Paid Time Off', function () {
-    const fixtures = [
-      {
-        grossSalary: 5000,
         startDate: '2013-01-06',
         endDate: '2019-10-12',
         expectedResult: {
-          grossValue: 6111.11,
-          inss: 0,
-          irrf: 0,
-          netValue: 6111.11,
+          baseValue: 11250,
+          third: 3750,
+          grossValue: 15000,
+          inss: 713.09,
+          irrf: 3059.54,
+          netValue: 11227.37,
           details: {
-            grossValue: 'Férias proporcionais referente ao período de 06/01/2019 até 29/11/2019 (após acréscimo de 48 dias do aviso prévio) totalizando 11 meses',
-            inss: 'Não há incidência de INSS para férias indenizadas',
-            irrf: 'Não há IRRF para férias indenizadas'
-          }
-        }
-      },
-      {
-        grossSalary: 1200,
-        startDate: '2018-09-11',
-        endDate: '2020-04-10',
-        expectedResult: {
-          grossValue: 1066.66,
-          inss: 0,
-          irrf: 0,
-          netValue: 1066.66,
-          details: {
-            grossValue: 'Férias proporcionais referente ao período de 11/09/2020 até 13/05/2020 (após acréscimo de 33 dias do aviso prévio) totalizando 8 meses',
-            inss: 'Não há incidência de INSS para férias indenizadas',
-            irrf: 'Não há IRRF para férias indenizadas'
-          }
-        }
-      },
-      {
-        grossSalary: 2500,
-        startDate: '2018-11-01',
-        endDate: '2020-03-20',
-        expectedResult: {
-          grossValue: 1666.66,
-          inss: 0,
-          irrf: 0,
-          netValue: 1666.66,
-          details: {
-            grossValue: 'Férias proporcionais referente ao período de 01/11/2020 até 22/04/2020 (após acréscimo de 33 dias do aviso prévio) totalizando 6 meses',
-            inss: 'Não há incidência de INSS para férias indenizadas',
-            irrf: 'Não há IRRF para férias indenizadas'
+            baseValue: 'R$ 3000 (10 dias de férias vencidas) + R$ 8250 (11 meses completos)',
+            third: 'R$ 3000 * 1/3 (10 dias de férias vencidas) + R$ 8250 * 1/3 (11 meses completos)',
+            grossValue: 'R$ 4000 (10 dias de férias vencidas) + R$ 11000 (11 meses completos)',
+            inss: 'Para salários acima de 6101.06, paga-se o teto de 713.09',
+            irrf: '(1903.98 x 0.0%) + (922.67 x 7.5%) + (924.40 x 15.0%) + (913.63 x 22.5%) + (9622.23 x 27.5%) = 3059.54'
           }
         }
       }
     ]
 
-    fixtures.forEach(function ({ grossSalary, startDate, endDate, expectedResult }) {
-      it(`calculates advance notice paid time off for ${grossSalary} gross salary, working between ${startDate} and ${endDate}`, function () {
-        const result = advanceNoticePaidTimeOff({ grossSalary, startDate, endDate })
+    fixtures.forEach(function ({ grossSalary, startDate, endDate, remainingDaysPaidTimeOff, expectedResult }) {
+      it(`calculates the paid time off for ${grossSalary} gross salary`, function () {
+        const result = paidTimeOff({ grossSalary, startDate, endDate, remainingDaysPaidTimeOff })
         expect(result).to.eql(expectedResult)
       })
     })

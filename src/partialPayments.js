@@ -1,4 +1,3 @@
-const moment = require('moment')
 const { INSS, detailedINSS } = require('./inss')
 const { IRRF, detailedIRRF } = require('./irrf')
 const { roundCurrency } = require('./currencyHelper')
@@ -118,55 +117,63 @@ function thirteenthSalary ({ grossSalary, startDate, endDate, firstInstallment, 
   }
 }
 
-function paidTimeOffIndemnified ({ grossSalary, remainingDaysPaidTimeOff }) {
+function fullPaidTimeOff ({ grossSalary, remainingDaysPaidTimeOff, irrfDeductions }) {
   // TODO: include skip days to discount on remainingDaysPaidTimeOff
-  const proportionalGrossSalary = grossSalary * remainingDaysPaidTimeOff / daysInMonth
-  const grossTimeOff = grossPaidTimeOffSalary({
-    grossSalary: proportionalGrossSalary
+  const baseValue = grossSalary * remainingDaysPaidTimeOff / daysInMonth
+  const baseWithThird = grossPaidTimeOffSalary({
+    grossSalary: baseValue
   })
-
-  const grossValue = roundCurrency(grossTimeOff)
-  const inss = 0
-  const irrf = 0
-  const netValue = grossValue - inss - irrf
-
+  const third = roundCurrency(baseWithThird - baseValue)
   return {
-    grossValue,
-    inss,
-    irrf,
-    netValue,
-    details: {
-      grossValue: `Férias vencidas com ${remainingDaysPaidTimeOff} dias não utilizados`,
-      inss: 'Não há incidência de INSS para férias indenizadas',
-      irrf: 'Não há IRRF para férias indenizadas'
-    }
+    baseValue,
+    grossValue: baseWithThird,
+    third
   }
 }
 
-function advanceNoticePaidTimeOff ({ grossSalary, startDate, endDate }) {
-  const grossTimeOff = grossPaidTimeOffSalary({ grossSalary })
+function indemnifiedPaidTimeOff ({ grossSalary, startDate, endDate }) {
+  const daysToAdd = advanceNoticeDays({ startDate, endDate })
+  const endDateWithAdvanceNotice = addDays(endDate, daysToAdd)
+  const months = completedMonthsFromAniversary(startDate, endDateWithAdvanceNotice)
 
-  const days = advanceNoticeDays({ startDate, endDate })
-  const endDateWithAdvanceNotice = addDays(endDate, days)
-  const completedMonths = completedMonthsFromAniversary(startDate, endDateWithAdvanceNotice)
-
-  const grossValue = roundCurrency(grossTimeOff * completedMonths / monthsInYear)
-  const inss = 0
-  const irrf = 0
-  const netValue = grossValue - inss - irrf
-
-  const lastAniversaryBrFormat = `${moment(startDate).format('DD/MM')}/${moment(endDate).format('YYYY')}`
-  const endDateWithAdvanceNoticeBrFormat = moment(endDateWithAdvanceNotice).format('DD/MM/YYYY')
+  const baseValue = grossSalary * months / monthsInYear
+  const baseWithThird = grossPaidTimeOffSalary({
+    grossSalary: baseValue
+  })
+  const third = roundCurrency(baseWithThird - baseValue)
 
   return {
+    baseValue,
+    grossValue: baseWithThird,
+    third,
+    months
+  }
+}
+
+function paidTimeOff ({ grossSalary, startDate, endDate, remainingDaysPaidTimeOff, irrfDeductions }) {
+  const full = fullPaidTimeOff({ grossSalary, remainingDaysPaidTimeOff, irrfDeductions })
+  const indemnified = indemnifiedPaidTimeOff({ grossSalary, startDate, endDate })
+
+  const baseValue = roundCurrency(full.baseValue + indemnified.baseValue)
+  const third = roundCurrency(full.third + indemnified.third)
+  const grossValue = roundCurrency(full.grossValue + indemnified.grossValue)
+  const inss = INSS(grossValue)
+  const irrf = IRRF(grossValue - inss, irrfDeductions)
+  const netValue = roundCurrency(grossValue - inss - irrf)
+
+  return {
+    baseValue,
+    third,
     grossValue,
     inss,
     irrf,
     netValue,
     details: {
-      grossValue: `Férias proporcionais referente ao período de ${lastAniversaryBrFormat} até ${endDateWithAdvanceNoticeBrFormat} (após acréscimo de ${days} dias do aviso prévio) totalizando ${completedMonths} meses`,
-      inss: 'Não há incidência de INSS para férias indenizadas',
-      irrf: 'Não há IRRF para férias indenizadas'
+      baseValue: `R$ ${full.baseValue} (${remainingDaysPaidTimeOff} dias de férias vencidas) + R$ ${indemnified.baseValue} (${indemnified.months} meses completos)`,
+      third: `R$ ${full.baseValue} * 1/3 (${remainingDaysPaidTimeOff} dias de férias vencidas) + R$ ${indemnified.baseValue} * 1/3 (${indemnified.months} meses completos)`,
+      grossValue: `R$ ${full.grossValue} (${remainingDaysPaidTimeOff} dias de férias vencidas) + R$ ${indemnified.grossValue} (${indemnified.months} meses completos)`,
+      inss: detailedINSS(grossValue),
+      irrf: detailedIRRF(grossValue - inss, irrfDeductions)
     }
   }
 }
@@ -184,6 +191,5 @@ module.exports = {
   salaryRemainer,
   advanceNoticeSalary,
   thirteenthSalary,
-  paidTimeOffIndemnified,
-  advanceNoticePaidTimeOff
+  paidTimeOff
 }

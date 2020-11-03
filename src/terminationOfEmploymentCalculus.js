@@ -2,8 +2,7 @@ const { roundCurrency } = require('./currencyHelper')
 const {
   salaryRemainer,
   advanceNoticeSalary,
-  paidTimeOffIndemnified,
-  advanceNoticePaidTimeOff,
+  paidTimeOff,
   thirteenthSalary
 } = require('./partialPayments')
 
@@ -27,10 +26,9 @@ function terminationOfEmploymentCalculus ({
   irrfDeductions
 }) {
   const salaryRemainerResult = salaryRemainer({ grossSalary, endDate, irrfDeductions })
-  const advanceNoticeResult = advanceNoticeSalary({ grossSalary, startDate, endDate })
+  const advanceNoticeResult = advanceNoticeSalary({ grossSalary, startDate, endDate, irrfDeductions })
 
-  const paidTimeOffResult = paidTimeOffIndemnified({ grossSalary, remainingDaysPaidTimeOff })
-  const advanceNoticePaidTimeOffResult = advanceNoticePaidTimeOff({ grossSalary, startDate, endDate })
+  const paidTimeOffResult = paidTimeOff({ grossSalary, startDate, endDate, remainingDaysPaidTimeOff, irrfDeductions })
   const thirteenthSalaryResult = thirteenthSalary({
     grossSalary,
     startDate,
@@ -43,7 +41,6 @@ function terminationOfEmploymentCalculus ({
     salaryRemainerResult,
     advanceNoticeResult,
     paidTimeOffResult,
-    advanceNoticePaidTimeOffResult,
     thirteenthSalaryResult
   ])
 
@@ -67,11 +64,7 @@ function terminationOfEmploymentCalculus ({
       total: roundCurrency(salaryRemainerResult.netValue + advanceNoticeResult.netValue)
     },
     thirteenthSalary: thirteenthSalaryResult,
-    paidTimeOff: {
-      full: paidTimeOffResult,
-      advanceNotice: advanceNoticePaidTimeOffResult,
-      total: roundCurrency(paidTimeOffResult.netValue + advanceNoticePaidTimeOffResult.netValue)
-    },
+    paidTimeOff: paidTimeOffResult,
     fgts: {
       base: {
         deposited: depositedFgts,
