@@ -1,3 +1,4 @@
+const moment = require('moment')
 const { INSS, detailedINSS } = require('./inss')
 const { IRRF, detailedIRRF } = require('./irrf')
 const { roundCurrency } = require('./currencyHelper')
@@ -142,11 +143,15 @@ function indemnifiedPaidTimeOff ({ grossSalary, startDate, endDate }) {
   })
   const third = roundCurrency(baseWithThird - baseValue)
 
+  const startDateAniversaryBrFormat = `${moment(startDate).format('DD/MM')}/${moment(endDate).format('YYYY')}`
+  const endDateWithAdvanceNoticeBrFormat = moment(endDateWithAdvanceNotice).format('DD/MM/YYYY')
+
   return {
     baseValue,
     grossValue: baseWithThird,
     third,
-    months
+    months,
+    interval: `${startDateAniversaryBrFormat} até ${endDateWithAdvanceNoticeBrFormat}`
   }
 }
 
@@ -169,9 +174,9 @@ function paidTimeOff ({ grossSalary, startDate, endDate, remainingDaysPaidTimeOf
     irrf,
     netValue,
     details: {
-      baseValue: `R$ ${full.baseValue} (${remainingDaysPaidTimeOff} dias de férias vencidas) + R$ ${indemnified.baseValue} (${indemnified.months} meses completos)`,
-      third: `R$ ${full.baseValue} * 1/3 (${remainingDaysPaidTimeOff} dias de férias vencidas) + R$ ${indemnified.baseValue} * 1/3 (${indemnified.months} meses completos)`,
-      grossValue: `R$ ${full.grossValue} (${remainingDaysPaidTimeOff} dias de férias vencidas) + R$ ${indemnified.grossValue} (${indemnified.months} meses completos)`,
+      baseValue: `R$ ${full.baseValue} (${remainingDaysPaidTimeOff} dias de férias vencidas) + R$ ${indemnified.baseValue} (${indemnified.months} meses completos, referente à ${indemnified.interval})`,
+      third: `R$ ${full.baseValue} * 1/3 (${remainingDaysPaidTimeOff} dias de férias vencidas) + R$ ${indemnified.baseValue} * 1/3 (${indemnified.months} meses completos, referente à ${indemnified.interval})`,
+      grossValue: `R$ ${full.grossValue} (${remainingDaysPaidTimeOff} dias de férias vencidas) + R$ ${indemnified.grossValue} (${indemnified.months} meses completos, referente à ${indemnified.interval})`,
       inss: detailedINSS(grossValue),
       irrf: detailedIRRF(grossValue - inss, irrfDeductions)
     }

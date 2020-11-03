@@ -121,9 +121,9 @@ describe('Partial Payments', function () {
           irrf: 3059.54,
           netValue: 11227.37,
           details: {
-            baseValue: 'R$ 3000 (10 dias de férias vencidas) + R$ 8250 (11 meses completos)',
-            third: 'R$ 3000 * 1/3 (10 dias de férias vencidas) + R$ 8250 * 1/3 (11 meses completos)',
-            grossValue: 'R$ 4000 (10 dias de férias vencidas) + R$ 11000 (11 meses completos)',
+            baseValue: 'R$ 3000 (10 dias de férias vencidas) + R$ 8250 (11 meses completos, referente à 06/01/2019 até 29/11/2019)',
+            third: 'R$ 3000 * 1/3 (10 dias de férias vencidas) + R$ 8250 * 1/3 (11 meses completos, referente à 06/01/2019 até 29/11/2019)',
+            grossValue: 'R$ 4000 (10 dias de férias vencidas) + R$ 11000 (11 meses completos, referente à 06/01/2019 até 29/11/2019)',
             inss: 'Para salários acima de 6101.06, paga-se o teto de 713.09',
             irrf: '(1903.98 x 0.0%) + (922.67 x 7.5%) + (924.40 x 15.0%) + (913.63 x 22.5%) + (9622.23 x 27.5%) = 3059.54'
           }
