@@ -189,7 +189,7 @@ function advanceNoticeDays ({ startDate, endDate }) {
 }
 
 function grossPaidTimeOffSalary ({ grossSalary }) {
-  return grossSalary + grossSalary / 3
+  return roundCurrency(grossSalary + grossSalary / 3)
 }
 
 module.exports = {
