@@ -118,7 +118,7 @@ function thirteenthSalary ({ grossSalary, startDate, endDate, firstInstallment, 
   }
 }
 
-function fullPaidTimeOff ({ grossSalary, remainingDaysPaidTimeOff, irrfDeductions }) {
+function fullPaidTimeOff ({ grossSalary, remainingDaysPaidTimeOff }) {
   // TODO: include skip days to discount on remainingDaysPaidTimeOff
   const baseValue = grossSalary * remainingDaysPaidTimeOff / daysInMonth
   const baseWithThird = grossPaidTimeOffSalary({
@@ -155,15 +155,18 @@ function indemnifiedPaidTimeOff ({ grossSalary, startDate, endDate }) {
   }
 }
 
-function paidTimeOff ({ grossSalary, startDate, endDate, remainingDaysPaidTimeOff, irrfDeductions }) {
-  const full = fullPaidTimeOff({ grossSalary, remainingDaysPaidTimeOff, irrfDeductions })
+function paidTimeOff ({ grossSalary, startDate, endDate, remainingDaysPaidTimeOff }) {
+  const full = fullPaidTimeOff({ grossSalary, remainingDaysPaidTimeOff })
   const indemnified = indemnifiedPaidTimeOff({ grossSalary, startDate, endDate })
 
   const baseValue = roundCurrency(full.baseValue + indemnified.baseValue)
   const third = roundCurrency(full.third + indemnified.third)
   const grossValue = roundCurrency(full.grossValue + indemnified.grossValue)
-  const inss = INSS(grossValue)
-  const irrf = IRRF(grossValue - inss, irrfDeductions)
+
+  // const inss = INSS(grossValue)
+  // const irrf = IRRF(grossValue - inss, irrfDeductions)
+  const inss = 0
+  const irrf = 0
   const netValue = roundCurrency(grossValue - inss - irrf)
 
   return {
@@ -177,8 +180,10 @@ function paidTimeOff ({ grossSalary, startDate, endDate, remainingDaysPaidTimeOf
       baseValue: `R$ ${full.baseValue} (${remainingDaysPaidTimeOff} dias de férias vencidas) + R$ ${indemnified.baseValue} (${indemnified.months} meses completos, referente à ${indemnified.interval})`,
       third: `R$ ${full.baseValue} * 1/3 (${remainingDaysPaidTimeOff} dias de férias vencidas) + R$ ${indemnified.baseValue} * 1/3 (${indemnified.months} meses completos, referente à ${indemnified.interval})`,
       grossValue: `R$ ${full.grossValue} (${remainingDaysPaidTimeOff} dias de férias vencidas) + R$ ${indemnified.grossValue} (${indemnified.months} meses completos, referente à ${indemnified.interval})`,
-      inss: detailedINSS(grossValue),
-      irrf: detailedIRRF(grossValue - inss, irrfDeductions)
+      // inss: detailedINSS(grossValue),
+      // irrf: detailedIRRF(grossValue - inss, irrfDeductions)
+      inss: 'Férias indenizadas pagas na rescisão não sofre incidência previdenciária',
+      irrf: 'Férias indenizadas pagas na rescisão são isentas de imposto de renda'
     }
   }
 }
