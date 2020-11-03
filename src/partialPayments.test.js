@@ -129,7 +129,7 @@ describe('Partial Payments', function () {
             grossValue: 'R$ 4000 (10 dias de férias vencidas) + R$ 11000 (11 meses completos, referente à 06/01/2019 até 29/11/2019)',
             // inss: 'Para salários acima de 6101.06, paga-se o teto de 713.09',
             // irrf: '(1903.98 x 0.0%) + (922.67 x 7.5%) + (924.40 x 15.0%) + (913.63 x 22.5%) + (9622.23 x 27.5%) = 3059.54'
-            inss: 'Férias indenizadas pagas na rescisão não sofre incidência previdenciária',
+            inss: 'Férias indenizadas pagas na rescisão não sofrem incidência previdenciária',
             irrf: 'Férias indenizadas pagas na rescisão são isentas de imposto de renda'
           }
         }

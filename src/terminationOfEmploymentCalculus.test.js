@@ -86,7 +86,7 @@ describe('Full Termination Calculus', function () {
             grossValue: 'R$ 8000 (30 dias de férias vencidas) + R$ 2000 (3 meses completos, referente à 23/09/2020 até 25/12/2020)',
             // inss: 'Para salários acima de 6101.06, paga-se o teto de 713.09',
             // irrf: '(1903.98 x 0.0%) + (922.67 x 7.5%) + (924.40 x 15.0%) + (913.63 x 22.5%) + (4182.64 x 27.5%) = 1563.65'
-            inss: 'Férias indenizadas pagas na rescisão não sofre incidência previdenciária',
+            inss: 'Férias indenizadas pagas na rescisão não sofrem incidência previdenciária',
             irrf: 'Férias indenizadas pagas na rescisão são isentas de imposto de renda'
           }
         },

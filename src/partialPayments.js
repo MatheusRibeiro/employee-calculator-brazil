@@ -182,7 +182,7 @@ function paidTimeOff ({ grossSalary, startDate, endDate, remainingDaysPaidTimeOf
       grossValue: `R$ ${full.grossValue} (${remainingDaysPaidTimeOff} dias de férias vencidas) + R$ ${indemnified.grossValue} (${indemnified.months} meses completos, referente à ${indemnified.interval})`,
       // inss: detailedINSS(grossValue),
       // irrf: detailedIRRF(grossValue - inss, irrfDeductions)
-      inss: 'Férias indenizadas pagas na rescisão não sofre incidência previdenciária',
+      inss: 'Férias indenizadas pagas na rescisão não sofrem incidência previdenciária',
       irrf: 'Férias indenizadas pagas na rescisão são isentas de imposto de renda'
     }
   }
