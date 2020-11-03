@@ -96,6 +96,8 @@ function thirteenthSalary ({ grossSalary, startDate, endDate, firstInstallment, 
   const netValue = roundCurrency(grossValue - inss - irrf - firstInstallment)
 
   return {
+    proportional: grossValueProportional,
+    indemnified: grossValueIndemnified,
     grossValue,
     firstInstallment,
     fgtsProportional,
@@ -104,7 +106,9 @@ function thirteenthSalary ({ grossSalary, startDate, endDate, firstInstallment, 
     irrf,
     netValue,
     details: {
-      grossValue: `R$ ${grossValueProportional} (proporcional para ${monthsProportional} meses) + R$ ${grossValueIndemnified} (indenizado para ${monthsIndemnified} meses)`,
+      proportional: `13º proporcional para ${monthsProportional} meses`,
+      indemnified: `13º indenizado para ${monthsIndemnified} meses`,
+      grossValue: `R$ ${grossValueProportional} + R$ ${grossValueIndemnified}`,
       firstInstallment: 'Valor líquido do 13º adiantado',
       fgtsProportional: fgtsDescription(grossValueProportional),
       fgtsIndemnified: fgtsDescription(grossValueIndemnified),

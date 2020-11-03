@@ -76,6 +76,8 @@ describe('Partial Payments', function () {
         endDate: '2020-10-12',
         firstInstallment: 2500,
         expectedResult: {
+          proportional: 4500,
+          indemnified: 1000,
           grossValue: 5500,
           firstInstallment: 2500,
           fgtsProportional: 360,
@@ -84,7 +86,9 @@ describe('Partial Payments', function () {
           irrf: 470.18,
           netValue: 1900.87,
           details: {
-            grossValue: 'R$ 4500 (proporcional para 9 meses) + R$ 1000 (indenizado para 2 meses)',
+            proportional: '13º proporcional para 9 meses',
+            indemnified: '13º indenizado para 2 meses',
+            grossValue: 'R$ 4500 + R$ 1000',
             firstInstallment: 'Valor líquido do 13º adiantado',
             fgtsProportional: '8% sobre 4500',
             fgtsIndemnified: '8% sobre 1000',

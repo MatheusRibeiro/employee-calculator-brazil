@@ -50,6 +50,8 @@ describe('Full Termination Calculus', function () {
           total: 10226.91
         },
         thirteenthSalary: {
+          proportional: 5000,
+          indemnified: 1000,
           grossValue: 6000,
           firstInstallment: 0,
           fgtsProportional: 400,
@@ -58,7 +60,9 @@ describe('Full Termination Calculus', function () {
           irrf: 467.54,
           netValue: 4833.51,
           details: {
-            grossValue: 'R$ 5000 (proporcional para 10 meses) + R$ 1000 (indenizado para 2 meses)',
+            proportional: '13º proporcional para 10 meses',
+            indemnified: '13º indenizado para 2 meses',
+            grossValue: 'R$ 5000 + R$ 1000',
             firstInstallment: 'Valor líquido do 13º adiantado',
             fgtsProportional: '8% sobre 5000',
             fgtsIndemnified: '8% sobre 1000',
