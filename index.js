@@ -13,8 +13,7 @@ const {
 const {
   salaryRemainer,
   advanceNoticeSalary,
-  paidTimeOffIndemnified,
-  advanceNoticePaidTimeOff,
+  paidTimeOff,
   thirteenthSalary
 } = require('./src/partialPayments')
 
@@ -24,8 +23,7 @@ module.exports = {
   terminationOfEmploymentCalculus,
   salaryRemainer,
   advanceNoticeSalary,
-  paidTimeOffIndemnified,
-  advanceNoticePaidTimeOff,
+  paidTimeOff,
   thirteenthSalary,
   INSS,
   detailedINSS,
