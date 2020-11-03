@@ -24,10 +24,6 @@ function porportinalSalaryDescription (days) {
   return `Salário proporcional para ${days} dias`
 }
 
-function porportinalThirteenthSalaryDescription (months) {
-  return `13º proporcional para ${months} meses`
-}
-
 function salaryRemainer ({ grossSalary, endDate, irrfDeductions }) {
   const days = completedDaysFromMonth(endDate)
 
@@ -76,60 +72,44 @@ function advanceNoticeSalary ({ grossSalary, startDate, endDate }) {
   }
 }
 
-function proportionalThirteenthSalary ({ grossSalary, startDate, endDate, firstInstallment, irrfDeductions }) {
-  const completedMonths = completedMonthsFromYear(endDate)
+function thirteenthSalary ({ grossSalary, startDate, endDate, firstInstallment, irrfDeductions }) {
+  const days = advanceNoticeDays({ startDate, endDate })
+  const endDateWithAdvanceNotice = addDays(endDate, days)
 
-  const grossValue = roundCurrency(grossSalary * completedMonths / monthsInYear)
-  const fgts = roundCurrency(grossValue * fgtsRate)
+  const monthsProportional = completedMonthsFromYear(endDate)
+  const combinedMonths = completedMonthsFromYear(endDateWithAdvanceNotice)
+
+  // getting indemnified months by diff and adjusting it for cases when combinedMonths is lower than monthsProportional
+  const monthsIndemnified = ((combinedMonths - monthsProportional) + monthsInYear) % monthsInYear
+
+  const grossValueProportional = roundCurrency(grossSalary * monthsProportional / monthsInYear)
+  const grossValueIndemnified = roundCurrency(grossSalary * monthsIndemnified / monthsInYear)
+  const grossValue = roundCurrency(grossValueProportional + grossValueIndemnified)
+
+  // the fgts is divided because just the proportional applies 40% penalty
+  const fgtsProportional = roundCurrency(grossValueProportional * fgtsRate)
+  const fgtsIndemnified = roundCurrency(grossValueIndemnified * fgtsRate)
+
   const inss = INSS(grossValue)
   const irrf = IRRF(grossValue - inss, irrfDeductions)
+
   const netValue = roundCurrency(grossValue - inss - irrf - firstInstallment)
 
   return {
     grossValue,
     firstInstallment,
-    fgts,
+    fgtsProportional,
+    fgtsIndemnified,
     inss,
     irrf,
     netValue,
     details: {
-      grossValue: porportinalThirteenthSalaryDescription(completedMonths),
+      grossValue: `R$ ${grossValueProportional} (proporcional para ${monthsProportional} meses) + R$ ${grossValueIndemnified} (indenizado para ${monthsIndemnified} meses)`,
       firstInstallment: 'Valor líquido do 13º adiantado',
-      fgts: fgtsDescription(grossValue),
+      fgtsProportional: fgtsDescription(grossValueProportional),
+      fgtsIndemnified: fgtsDescription(grossValueIndemnified),
       inss: detailedINSS(grossValue),
       irrf: detailedIRRF(grossValue - inss, irrfDeductions)
-    }
-  }
-}
-
-function indemnifiedThirteenthSalary ({ grossSalary, startDate, endDate }) {
-  const days = advanceNoticeDays({ startDate, endDate })
-  const endDateWithAdvanceNotice = addDays(endDate, days)
-
-  // as there is a chance that the projected advance notice date ends next year,
-  // we fix it by add 12 and get the remainer of the division by 12
-  // ex1: 31/01/2019 - 31/05/2020 => ((5 month - 1 month ) + 12) % 12 = (4 + 12) % 12 = 4
-  // ex2: 31/11/2019 - 31/01/2020 => ((1 month - 11 month ) + 12) % 12 = (-10 + 12) % 12 = 2
-  const monthsDiff = completedMonthsFromYear(endDateWithAdvanceNotice) - completedMonthsFromYear(endDate)
-  const completedMonths = (monthsDiff + monthsInYear) % monthsInYear
-
-  const grossValue = roundCurrency(grossSalary * completedMonths / monthsInYear)
-  const fgts = roundCurrency(grossValue * fgtsRate)
-  const inss = 0
-  const irrf = 0
-  const netValue = roundCurrency(grossValue - inss - irrf)
-
-  return {
-    grossValue,
-    fgts,
-    inss,
-    irrf,
-    netValue,
-    details: {
-      grossValue: porportinalThirteenthSalaryDescription(completedMonths),
-      fgts: fgtsDescription(grossValue),
-      inss: 'Não há incidência de INSS para décimo terceiro indenizado',
-      irrf: 'Não há IRRF para décimo terceiro indenizado'
     }
   }
 }
@@ -199,8 +179,7 @@ function grossPaidTimeOffSalary ({ grossSalary }) {
 module.exports = {
   salaryRemainer,
   advanceNoticeSalary,
-  proportionalThirteenthSalary,
-  indemnifiedThirteenthSalary,
+  thirteenthSalary,
   paidTimeOffIndemnified,
   advanceNoticePaidTimeOff
 }

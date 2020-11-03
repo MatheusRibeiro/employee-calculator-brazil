@@ -4,8 +4,7 @@ describe('Partial Payments', function () {
   const {
     salaryRemainer,
     advanceNoticeSalary,
-    proportionalThirteenthSalary,
-    indemnifiedThirteenthSalary,
+    thirteenthSalary,
     paidTimeOffIndemnified,
     advanceNoticePaidTimeOff
   } = require('./partialPayments')
@@ -69,7 +68,7 @@ describe('Partial Payments', function () {
     })
   })
 
-  describe('Proportional Thirteenth Salary', function () {
+  describe('Thirteenth Salary', function () {
     const fixtures = [
       {
         grossSalary: 6000,
@@ -77,74 +76,28 @@ describe('Partial Payments', function () {
         endDate: '2020-10-12',
         firstInstallment: 2500,
         expectedResult: {
-          grossValue: 4500,
+          grossValue: 5500,
           firstInstallment: 2500,
-          fgts: 360,
-          inss: 488.94,
-          irrf: 266.36,
-          netValue: 1244.69,
+          fgtsProportional: 360,
+          fgtsIndemnified: 80,
+          inss: 628.94,
+          irrf: 470.18,
+          netValue: 1900.87,
           details: {
-            grossValue: '13º proporcional para 9 meses',
+            grossValue: 'R$ 4500 (proporcional para 9 meses) + R$ 1000 (indenizado para 2 meses)',
             firstInstallment: 'Valor líquido do 13º adiantado',
-            fgts: '8% sobre 4500',
-            inss: '(1045.00 x 7.5%) + (1044.60 x 9.0%) + (1044.80 x 12.0%) + (1365.60 x 14.0%) = 488.94',
-            irrf: '(1903.98 x 0.0%) + (922.67 x 7.5%) + (924.40 x 15.0%) + (260.01 x 22.5%) = 266.36'
+            fgtsProportional: '8% sobre 4500',
+            fgtsIndemnified: '8% sobre 1000',
+            inss: '(1045.00 x 7.5%) + (1044.60 x 9.0%) + (1044.80 x 12.0%) + (2365.60 x 14.0%) = 628.94',
+            irrf: '(1903.98 x 0.0%) + (922.67 x 7.5%) + (924.40 x 15.0%) + (913.63 x 22.5%) + (206.38 x 27.5%) = 470.18'
           }
         }
       }
     ]
 
     fixtures.forEach(function ({ grossSalary, startDate, endDate, firstInstallment, expectedResult }) {
-      it(`calculates the proportional thirteenth salary for ${grossSalary} gross salary, giving a firstInstallment of ${firstInstallment} and working between ${startDate} and ${endDate}`, function () {
-        const result = proportionalThirteenthSalary({ grossSalary, startDate, endDate, firstInstallment })
-        expect(result).to.eql(expectedResult)
-      })
-    })
-  })
-
-  describe('Indemnified Thirteenth Salary', function () {
-    const fixtures = [
-      {
-        grossSalary: 6000,
-        startDate: '2014-11-06',
-        endDate: '2020-10-12',
-        expectedResult: {
-          grossValue: 1000,
-          fgts: 80,
-          inss: 0,
-          irrf: 0,
-          netValue: 1000,
-          details: {
-            grossValue: '13º proporcional para 2 meses',
-            fgts: '8% sobre 1000',
-            inss: 'Não há incidência de INSS para décimo terceiro indenizado',
-            irrf: 'Não há IRRF para décimo terceiro indenizado'
-          }
-        }
-      },
-      {
-        grossSalary: 6000,
-        startDate: '2012-12-12',
-        endDate: '2020-11-14',
-        expectedResult: {
-          grossValue: 1000,
-          fgts: 80,
-          inss: 0,
-          irrf: 0,
-          netValue: 1000,
-          details: {
-            grossValue: '13º proporcional para 2 meses',
-            fgts: '8% sobre 1000',
-            inss: 'Não há incidência de INSS para décimo terceiro indenizado',
-            irrf: 'Não há IRRF para décimo terceiro indenizado'
-          }
-        }
-      }
-    ]
-
-    fixtures.forEach(function ({ grossSalary, startDate, endDate, expectedResult }) {
-      it(`calculates the indemnified thirteenth salary for ${grossSalary} gross salary, working between ${startDate} and ${endDate}`, function () {
-        const result = indemnifiedThirteenthSalary({ grossSalary, startDate, endDate })
+      it(`calculates the thirteenth salary for ${grossSalary} gross salary, giving a firstInstallment of ${firstInstallment} and working between ${startDate} and ${endDate}`, function () {
+        const result = thirteenthSalary({ grossSalary, startDate, endDate, firstInstallment })
         expect(result).to.eql(expectedResult)
       })
     })

@@ -50,35 +50,21 @@ describe('Full Termination Calculus', function () {
           total: 10226.91
         },
         thirteenthSalary: {
-          proportional: {
-            grossValue: 5000,
-            firstInstallment: 0,
-            fgts: 400,
-            inss: 558.94,
-            irrf: 264.2,
-            netValue: 4176.85,
-            details: {
-              grossValue: '13º proporcional para 10 meses',
-              firstInstallment: 'Valor líquido do 13º adiantado',
-              fgts: '8% sobre 5000',
-              inss: '(1045.00 x 7.5%) + (1044.60 x 9.0%) + (1044.80 x 12.0%) + (1865.60 x 14.0%) = 558.94',
-              irrf: '(1903.98 x 0.0%) + (922.67 x 7.5%) + (924.40 x 15.0%) + (250.42 x 22.5%) = 264.2'
-            }
-          },
-          indemnified: {
-            grossValue: 1000,
-            fgts: 80,
-            inss: 0,
-            irrf: 0,
-            netValue: 1000,
-            details: {
-              grossValue: '13º proporcional para 2 meses',
-              fgts: '8% sobre 1000',
-              inss: 'Não há incidência de INSS para décimo terceiro indenizado',
-              irrf: 'Não há IRRF para décimo terceiro indenizado'
-            }
-          },
-          total: 5176.85
+          grossValue: 6000,
+          firstInstallment: 0,
+          fgtsProportional: 400,
+          fgtsIndemnified: 80,
+          inss: 698.94,
+          irrf: 467.54,
+          netValue: 4833.51,
+          details: {
+            grossValue: 'R$ 5000 (proporcional para 10 meses) + R$ 1000 (indenizado para 2 meses)',
+            firstInstallment: 'Valor líquido do 13º adiantado',
+            fgtsProportional: '8% sobre 5000',
+            fgtsIndemnified: '8% sobre 1000',
+            inss: '(1045.00 x 7.5%) + (1044.60 x 9.0%) + (1044.80 x 12.0%) + (2865.60 x 14.0%) = 698.94',
+            irrf: '(1903.98 x 0.0%) + (922.67 x 7.5%) + (924.40 x 15.0%) + (913.63 x 22.5%) + (196.79 x 27.5%) = 467.54'
+          }
         },
         paidTimeOff: {
           full: {
@@ -134,9 +120,9 @@ describe('Full Termination Calculus', function () {
           }
         },
         total: {
-          salary: 25403.76,
+          salary: 25060.42,
           fgts: 57345.6,
-          netValue: 82749.36
+          netValue: 82406.01
         }
       }
     }
@@ -155,14 +141,8 @@ describe('Full Termination Calculus', function () {
       expect(output.salary.total).to.equal(expectedOutput.salary.total)
     })
 
-    it('returns proportional thirteenth salary', function () {
-      expect(output.thirteenthSalary.proportional).to.eql(expectedOutput.thirteenthSalary.proportional)
-    })
-    it('returns indemnified thirteenth salary', function () {
-      expect(output.thirteenthSalary.indemnified).to.eql(expectedOutput.thirteenthSalary.indemnified)
-    })
-    it('returns the total thirteenth salary', function () {
-      expect(output.thirteenthSalary.total).to.equal(expectedOutput.thirteenthSalary.total)
+    it('returns  thirteenth salary', function () {
+      expect(output.thirteenthSalary).to.eql(expectedOutput.thirteenthSalary)
     })
 
     it('returns paid time off not taken', function () {
